@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import LFLiveKit_
+import LFLiveKit
 import ReplayKit
 
 /**

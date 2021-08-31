@@ -2,10 +2,10 @@
 # platform :ios, '9.0'
 
 target 'UZBroadcast' do
-  platform :ios, '9.0'
+  platform :ios, '10.0'
   use_frameworks!
 
-  pod 'LFLiveKit_'
+  pod 'LFLiveKit', :git => "https://github.com/kennic/LFLiveKit.git"
 
 end
 
@@ -13,6 +13,6 @@ target 'UZBroadcastExample' do
 	platform :ios, '10.0'
 	use_frameworks!
 	
-	pod 'LFLiveKit_'
+	pod 'LFLiveKit', :git => "https://github.com/kennic/LFLiveKit.git"
 	
 end

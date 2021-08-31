@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import LFLiveKit_
+import LFLiveKit
 
 public enum UZVideoResolution: CaseIterable {
 	case _360
