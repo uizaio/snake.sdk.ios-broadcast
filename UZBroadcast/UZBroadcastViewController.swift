@@ -57,13 +57,13 @@ open class UZBroadcastViewController: UIViewController {
 		return .lightContent
 	}
 	
-//	open override var shouldAutorotate: Bool {
-//		return config.autoRotate ?? (UIDevice.current.userInterfaceIdiom == .pad)
-//	}
-//
-//	open override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-//		return config.autoRotate == true ? .all : (UIDevice.current.userInterfaceIdiom == .phone ? .portrait : .all)
-//	}
+	open override var shouldAutorotate: Bool {
+		return config.autoRotate ?? (UIDevice.current.userInterfaceIdiom == .pad)
+	}
+
+	open override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+		return config.autoRotate == true ? .all : (UIDevice.current.userInterfaceIdiom == .phone ? .portrait : .all)
+	}
 	
 	open override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
 		return UIDevice.current.userInterfaceIdiom == .pad ? UIApplication.shared.interfaceOrientation ?? .portrait : .portrait
