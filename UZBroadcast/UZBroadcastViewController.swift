@@ -14,6 +14,11 @@ import ReplayKit
 This class helps you to initialize a livestream session
 */
 open class UZBroadcastViewController: UIViewController {
+	/// Set active camera
+	public var cameraPosition: AVCaptureDevice.Position {
+		get { session.captureDevicePosition }
+		set { session.captureDevicePosition = newValue }
+	}
 	/// `true` if broadcasting
 	public fileprivate(set)var isBroadcasting = false
 	/// Current broadcast configuration
@@ -52,13 +57,13 @@ open class UZBroadcastViewController: UIViewController {
 		return .lightContent
 	}
 	
-	open override var shouldAutorotate: Bool {
-		return config.autoRotate ?? (UIDevice.current.userInterfaceIdiom == .pad)
-	}
-	
-	open override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-		return config.autoRotate == true ? .all : (UIDevice.current.userInterfaceIdiom == .phone ? .portrait : .all)
-	}
+//	open override var shouldAutorotate: Bool {
+//		return config.autoRotate ?? (UIDevice.current.userInterfaceIdiom == .pad)
+//	}
+//
+//	open override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+//		return config.autoRotate == true ? .all : (UIDevice.current.userInterfaceIdiom == .phone ? .portrait : .all)
+//	}
 	
 	open override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
 		return UIDevice.current.userInterfaceIdiom == .pad ? UIApplication.shared.interfaceOrientation ?? .portrait : .portrait
@@ -72,19 +77,19 @@ open class UZBroadcastViewController: UIViewController {
 	open func requestAccessForVideo() {
 		let status = AVCaptureDevice.authorizationStatus(for: AVMediaType.video)
 		switch status {
-		case AVAuthorizationStatus.notDetermined:
-			AVCaptureDevice.requestAccess(for: AVMediaType.video, completionHandler: { (granted) in
-				if granted {
-					DispatchQueue.main.async {
-						self.session.running = true
+			case AVAuthorizationStatus.notDetermined:
+				AVCaptureDevice.requestAccess(for: AVMediaType.video, completionHandler: { (granted) in
+					if granted {
+						DispatchQueue.main.async {
+							self.session.running = true
+						}
 					}
-				}
-			})
-		case AVAuthorizationStatus.authorized:
-			session.running = true
-		case AVAuthorizationStatus.denied: break
-		case AVAuthorizationStatus.restricted: break
-		@unknown default:break
+				})
+				
+			case AVAuthorizationStatus.authorized: session.running = true
+			case AVAuthorizationStatus.denied: break
+			case AVAuthorizationStatus.restricted: break
+			@unknown default:break
 		}
 	}
 	
@@ -94,13 +99,11 @@ open class UZBroadcastViewController: UIViewController {
 	open func requestAccessForAudio() {
 		let status = AVCaptureDevice.authorizationStatus(for: AVMediaType.audio)
 		switch status {
-		case AVAuthorizationStatus.notDetermined:
-			AVCaptureDevice.requestAccess(for: AVMediaType.audio, completionHandler: { (_) in })
-			
-		case AVAuthorizationStatus.authorized: break
-		case AVAuthorizationStatus.denied: break
-		case AVAuthorizationStatus.restricted: break
-		@unknown default: break
+			case AVAuthorizationStatus.notDetermined: AVCaptureDevice.requestAccess(for: AVMediaType.audio, completionHandler: { (_) in })
+			case AVAuthorizationStatus.authorized: break
+			case AVAuthorizationStatus.denied: break
+			case AVAuthorizationStatus.restricted: break
+			@unknown default: break
 		}
 	}
 	

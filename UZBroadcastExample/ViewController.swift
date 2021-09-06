@@ -40,8 +40,8 @@ class ViewController: UIViewController {
 	}
 	
 	var videoResolution: UZVideoResolution = ._720
-	var videoBitrate: UZVideoBitrate = ._3000
-	var videoFPS: UZVideoFPS = ._30
+	var videoBitrate: UZVideoBitrate = ._3000Kbps
+	var videoFPS: UZVideoFPS = ._30fps
 	
 	var audioBitrate: UZAudioBitrate = ._128Kbps
 	var audioSampleRate: UZAudioSampleRate = ._44_1khz

@@ -1,0 +1,34 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "FrameLayoutKit",
+        "repositoryURL": "https://github.com/kennic/FrameLayoutKit",
+        "state": {
+          "branch": "master",
+          "revision": "7faadc26a1e410e8937684611c5025a88d823ac9",
+          "version": null
+        }
+      },
+      {
+        "package": "NKButton",
+        "repositoryURL": "https://github.com/kennic/NKButton",
+        "state": {
+          "branch": "master",
+          "revision": "2fc75347b8e69152a17afb795dc08cefcc224111",
+          "version": null
+        }
+      },
+      {
+        "package": "NVActivityIndicatorView",
+        "repositoryURL": "https://github.com/ninjaprox/NVActivityIndicatorView.git",
+        "state": {
+          "branch": null,
+          "revision": "4a4726d15367d82bd3e9e1f01625bd76dbbb0c98",
+          "version": "4.8.0"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

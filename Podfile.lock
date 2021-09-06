@@ -4,13 +4,16 @@ PODS:
   - OpenSSL-Universal (1.0.2.20):
     - OpenSSL-Universal/Static (= 1.0.2.20)
   - OpenSSL-Universal/Static (1.0.2.20)
+  - SwiftIcons (2.2.0)
 
 DEPENDENCIES:
   - LFLiveKit (from `https://github.com/kennic/LFLiveKit.git`)
+  - SwiftIcons
 
 SPEC REPOS:
   trunk:
     - OpenSSL-Universal
+    - SwiftIcons
 
 EXTERNAL SOURCES:
   LFLiveKit:
@@ -24,7 +27,8 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   LFLiveKit: 2be1a7cf4af0fbd466169a965a9b50af63555f38
   OpenSSL-Universal: ff34003318d5e1163e9529b08470708e389ffcdd
+  SwiftIcons: e7eb9bf2b475d6bdd8b37c5bdedc6d120aab0829
 
-PODFILE CHECKSUM: 48af14487a76bb8879c7722443d522df80da82ff
+PODFILE CHECKSUM: ed8ee60e70612d6a281a4129db09cc1f04fae455
 
 COCOAPODS: 1.10.2

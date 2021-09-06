@@ -14,5 +14,6 @@ target 'UZBroadcastExample' do
 	use_frameworks!
 	
 	pod 'LFLiveKit', :git => "https://github.com/kennic/LFLiveKit.git"
+	pod 'SwiftIcons'
 	
 end
