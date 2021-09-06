@@ -14,6 +14,7 @@ import SwiftIcons
 class MyBroadcastViewController: UZBroadcastViewController {
 	let closeButton = NKButton()
 	let switchButton = NKButton()
+	let mirrorButton = NKButton()
 	let flashButton = NKButton()
 	let beautyButton = NKButton()
 	let focusButton = NKButton()
@@ -43,6 +44,10 @@ class MyBroadcastViewController: UZBroadcastViewController {
 		switchButton.images[.selected] = UIImage(icon: .googleMaterialDesign(.cameraRear), size: iconSize, textColor: .black, backgroundColor: .clear)
 		switchButton.addTarget(self, action: #selector(switchCamera), for: .touchUpInside)
 		
+		mirrorButton.images[.normal] = UIImage(icon: .googleMaterialDesign(.flip), size: iconSize, textColor: .white, backgroundColor: .clear)
+		mirrorButton.images[.selected] = UIImage(icon: .googleMaterialDesign(.flip), size: iconSize, textColor: .black, backgroundColor: .clear)
+		mirrorButton.addTarget(self, action: #selector(toggleMirror), for: .touchUpInside)
+		
 		flashButton.images[.normal] = UIImage(icon: .googleMaterialDesign(.flashOff), size: iconSize, textColor: .white, backgroundColor: .clear)
 		flashButton.images[.selected] = UIImage(icon: .googleMaterialDesign(.flashOn), size: iconSize, textColor: .black, backgroundColor: .clear)
 		flashButton.addTarget(self, action: #selector(toggleFlash), for: .touchUpInside)
@@ -63,7 +68,7 @@ class MyBroadcastViewController: UZBroadcastViewController {
 		exposureButton.images[.selected] = UIImage(icon: .googleMaterialDesign(.exposure), size: iconSize, textColor: .black, backgroundColor: .clear)
 		exposureButton.addTarget(self, action: #selector(toggleAutoExposure), for: .touchUpInside)
 		
-		let buttons = [flashButton, beautyButton, switchButton, focusButton, exposureButton, muteButton]
+		let buttons = [flashButton, beautyButton, switchButton, mirrorButton, focusButton, exposureButton, muteButton]
 		buttons.forEach {
 			$0.titleColors[.normal] = .white
 			$0.titleColors[.selected] = .black
@@ -103,13 +108,13 @@ class MyBroadcastViewController: UZBroadcastViewController {
 		
 		let viewSize = view.bounds.size
 		let buttonSize = CGSize(width: 33, height: 33)
-		closeButton.frame = CGRect(x: viewSize.width - buttonSize.width - 15, y: 30, width: buttonSize.width, height: buttonSize.height)
+		closeButton.frame = CGRect(x: viewSize.width - buttonSize.width - 15, y: 40, width: buttonSize.width, height: buttonSize.height)
 		frameLayout.frame = view.bounds
 		
 		var labelSize = statusLabel.sizeThatFits(viewSize)
 		labelSize.width += 8
 		labelSize.height += 4
-		statusLabel.frame = CGRect(x: (viewSize.width - labelSize.width)/2, y: 30, width: labelSize.width, height: labelSize.height)
+		statusLabel.frame = CGRect(x: (viewSize.width - labelSize.width)/2, y: 50, width: labelSize.width, height: labelSize.height)
 	}
 	
 	func showStatus(_ string: String) {
@@ -141,6 +146,7 @@ class MyBroadcastViewController: UZBroadcastViewController {
 	func updateButtons() {
 		switchButton.isSelected = cameraPosition == .back
 		beautyButton.isSelected = session.beautyFace
+		mirrorButton.isSelected = session.mirror
 		flashButton.isSelected = session.torch
 		focusButton.isSelected = session.continuousAutoFocus
 		exposureButton.isSelected = session.continuousAutoExposure
@@ -159,6 +165,14 @@ class MyBroadcastViewController: UZBroadcastViewController {
 		showStatus(session.beautyFace ? "Beauty On" : "Beauty Off")
 	}
 	
+	@objc func toggleMirror() {
+		toggleBeauty()
+		session.mirror = !session.mirror
+		toggleBeauty()
+		updateButtons()
+		showStatus(session.mirror ? "Mirror On" : "Mirror Off")
+	}
+	
 	@objc func toggleFlash() {
 		session.torch = !session.torch
 		updateButtons()
@@ -167,7 +181,7 @@ class MyBroadcastViewController: UZBroadcastViewController {
 			showStatus("Flash is not available with front camera")
 		}
 		else {
-			showStatus(session.beautyFace ? "Flash On" : "Flash Off")
+			showStatus(session.torch ? "Flash On" : "Flash Off")
 		}
 	}
 	
