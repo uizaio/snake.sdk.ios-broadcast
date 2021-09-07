@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
     s.source_files = 'UZBroadcast/*.*'
     s.ios.deployment_target = '10.0'
     s.requires_arc  = true
-    s.swift_version = '5.2'
+    s.swift_version = '5.3'
     
     s.ios.dependency "HaishinKit", "~> 1.1.6"
     s.static_framework = true
