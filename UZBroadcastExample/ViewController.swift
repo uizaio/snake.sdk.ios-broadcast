@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import LFLiveKit
+import LFLiveKit_
 
 struct TableItem {
 	var title: String

@@ -12,6 +12,6 @@ Pod::Spec.new do |s|
     s.requires_arc  = true
     s.swift_version = '4.2'
     
-    s.ios.dependency "LFLiveKit", :git => "https://github.com/kennic/LFLiveKit.git"
+    s.ios.dependency "LFLiveKit_", "~> 2.8"
     s.static_framework = true
 end

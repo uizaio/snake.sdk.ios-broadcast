@@ -5,7 +5,7 @@ target 'UZBroadcast' do
   platform :ios, '10.0'
   use_frameworks!
 
-  pod 'LFLiveKit', :git => "https://github.com/kennic/LFLiveKit.git"
+  pod 'LFLiveKit_'
 
 end
 
@@ -13,7 +13,7 @@ target 'UZBroadcastExample' do
 	platform :ios, '10.0'
 	use_frameworks!
 	
-	pod 'LFLiveKit', :git => "https://github.com/kennic/LFLiveKit.git"
+	pod 'LFLiveKit_'
 	pod 'SwiftIcons'
 	
 end
