@@ -22,7 +22,9 @@ class MyBroadcastViewController: UZBroadcastViewController {
 	let muteButton = NKButton()
 	let frameLayout = VStackLayout()
 	let statusLabel = UILabel()
-
+	
+	let monochromeEffect = MonochromeEffect()
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
@@ -154,15 +156,16 @@ class MyBroadcastViewController: UZBroadcastViewController {
 	}
 	
 	@objc func switchCamera() {
-		cameraPosition = cameraPosition == .front ? .back : .front
-		updateButtons()
+		DispatchQueue.main.async {
+			self.cameraPosition = self.cameraPosition == .front ? .back : .front
+			self.updateButtons()
+		}
 	}
 	
 	@objc func toggleFilter() {
-//		rtmpStream.beautyFace = !rtmpStream.beautyFace
-//		rtmpStream.beautyLevel = 1.0
-//		updateButtons()
-//		showStatus(rtmpStream.beautyFace ? "Beauty On" : "Beauty Off")
+		videoEffect = videoEffect == nil ? monochromeEffect : nil
+		updateButtons()
+		showStatus(videoEffect != nil ? "Filter On" : "Filter Off")
 	}
 	
 	@objc func toggleMirror() {

@@ -18,11 +18,11 @@ open class UZBroadcastViewController: UIViewController {
 	public var streamKey: String?
 	
 	/// Set active camera
-	public var cameraPosition: AVCaptureDevice.Position = .front {
+	public var cameraPosition: UZCameraPosition = .front {
 		didSet {
 			guard cameraPosition != oldValue else { return }
-			rtmpStream.captureSettings[.isVideoMirrored] = cameraPosition == .front && isMirror
-			rtmpStream.attachCamera(DeviceUtil.device(withPosition: cameraPosition)) { error in
+			rtmpStream.captureSettings[.isVideoMirrored] = cameraPosition == .front
+			rtmpStream.attachCamera(DeviceUtil.device(withPosition: cameraPosition.asValue())) { error in
 				print(error)
 			}
 		}
@@ -78,16 +78,32 @@ open class UZBroadcastViewController: UIViewController {
 		set { rtmpStream.audioSettings[.sampleRate] = newValue }
 	}
 	
+	public var videoGravity: AVLayerVideoGravity {
+		get { lfView.videoGravity }
+		set { lfView.videoGravity = newValue }
+	}
+	
+	public var videoEffect: VideoEffect? {
+		didSet {
+			if let oldEffect = oldValue {
+				_ = rtmpStream.unregisterVideoEffect(oldEffect)
+			}
+			
+			guard let value = videoEffect else { return }
+			_ = rtmpStream.registerVideoEffect(value)
+		}
+	}
+	
 	/// `true` if broadcasting
 	public fileprivate(set)var isBroadcasting = false
 	/// Current broadcast configuration
 	public fileprivate(set) var config: UZBroadcastConfig! {
 		didSet {
-			cameraPosition = config.cameraPosition.asValue()
 			videoBitrate = config.videoBitrate.rawValue
 			videoFPS = config.videoFPS.rawValue
 			audioBitrate = config.audioBitrate.rawValue
 			audioSampleRate = config.audioSampleRate.rawValue
+			cameraPosition = config.cameraPosition
 			
 			if let orientation = DeviceUtil.videoOrientation(by: UIApplication.shared.statusBarOrientation) {
 				rtmpStream.orientation = orientation
@@ -100,14 +116,15 @@ open class UZBroadcastViewController: UIViewController {
 			]
 			rtmpStream.videoSettings = [
 				.width: config.videoResolution.videoSize.width,
-				.height: config.videoResolution.videoSize.height
+				.height: config.videoResolution.videoSize.height,
+				.scalingMode: ScalingMode.normal
 			]
 		}
 	}
 	
 	private var rtmpConnection = RTMPConnection()
 	internal lazy var rtmpStream = RTMPStream(connection: rtmpConnection)
-	private let lfView = MTHKView(frame: .zero)
+	private let lfView = GLHKView(frame: .zero)
 	
 	
 	// MARK: -
@@ -172,10 +189,12 @@ open class UZBroadcastViewController: UIViewController {
 		rtmpStream.attachAudio(AVCaptureDevice.default(for: .audio)) { error in
 			print(error)
 		}
-		rtmpStream.attachCamera(DeviceUtil.device(withPosition: cameraPosition)) { error in
+		rtmpStream.attachCamera(DeviceUtil.device(withPosition: cameraPosition.asValue())) { error in
 			print(error)
 		}
-//		rtmpStream.addObserver(self, forKeyPath: "currentFPS", options: .new, context: nil)
+		rtmpStream.addObserver(self, forKeyPath: "currentFPS", options: .new, context: nil)
+		
+		lfView.videoGravity = .resizeAspectFill
 		lfView.attachStream(rtmpStream)
 	}
 	
@@ -221,7 +240,7 @@ open class UZBroadcastViewController: UIViewController {
 	open override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
 		
-//		rtmpStream.removeObserver(self, forKeyPath: "currentFPS")
+		rtmpStream.removeObserver(self, forKeyPath: "currentFPS")
 		rtmpStream.close()
 		rtmpStream.dispose()
 		
@@ -267,6 +286,7 @@ open class UZBroadcastViewController: UIViewController {
 	@objc private func rtmpStatusHandler(_ notification: Notification) {
 		let e = Event.from(notification)
 		guard let data: ASObject = e.data as? ASObject, let code: String = data["code"] as? String else { return }
+		print("status: \(e)")
 		
 		switch code {
 			case RTMPConnection.Code.connectSuccess.rawValue:
@@ -284,7 +304,7 @@ open class UZBroadcastViewController: UIViewController {
 	}
 	
 	@objc private func rtmpErrorHandler(_ notification: Notification) {
-		
+		print("Error: \(notification)")
 	}
 	
 	@objc private func onOrientationChanged(_ notification: Notification) {
@@ -298,6 +318,12 @@ open class UZBroadcastViewController: UIViewController {
 	
 	@objc private func didBecomeActive(_ notification: Notification) {
 		 rtmpStream.receiveVideo = true
+	}
+	
+	open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
+		if Thread.isMainThread {
+			print("currentFPS: \(rtmpStream.currentFPS)")
+		}
 	}
 	
 	func tapScreen(_ gesture: UIGestureRecognizer) {
