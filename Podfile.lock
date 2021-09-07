@@ -1,26 +1,32 @@
 PODS:
-  - LFLiveKit_ (3.0.1):
-    - OpenSSL-Universal (= 1.0.2.19)
-  - OpenSSL-Universal (1.0.2.19):
-    - OpenSSL-Universal/Static (= 1.0.2.19)
-  - OpenSSL-Universal/Static (1.0.2.19)
+  - HaishinKit (1.1.6):
+    - Logboard (~> 2.2.1)
+  - Logboard (2.2.2)
   - SwiftIcons (2.2.0)
+  - UZBroadcast (2.0):
+    - HaishinKit (~> 1.1.6)
 
 DEPENDENCIES:
-  - LFLiveKit_
+  - HaishinKit
   - SwiftIcons
+  - UZBroadcast (from `./`)
 
 SPEC REPOS:
   trunk:
-    - LFLiveKit_
-    - OpenSSL-Universal
+    - HaishinKit
+    - Logboard
     - SwiftIcons
 
+EXTERNAL SOURCES:
+  UZBroadcast:
+    :path: "./"
+
 SPEC CHECKSUMS:
-  LFLiveKit_: f1f63d20908f462e949284ee6bb8bb437872fedc
-  OpenSSL-Universal: 8b48cc0d10c1b2923617dfe5c178aa9ed2689355
+  HaishinKit: 039ba3750939c0caac59ea7f45dc5fda0c8e1a1e
+  Logboard: 0ab6bbd984ed032b3f0b615cef06779a73445c80
   SwiftIcons: e7eb9bf2b475d6bdd8b37c5bdedc6d120aab0829
+  UZBroadcast: 79d2a96c41176c04be9c97820e33a3580b010b7e
 
-PODFILE CHECKSUM: 945e63e9181be6827aa6b555f46de7528e7bf72f
+PODFILE CHECKSUM: d979c5381b5caa6d6214ce6f15d01d7c24f3adc2
 
-COCOAPODS: 1.10.2
+COCOAPODS: 1.11.0

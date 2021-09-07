@@ -5,7 +5,7 @@ target 'UZBroadcast' do
   platform :ios, '10.0'
   use_frameworks!
 
-  pod 'LFLiveKit_'
+  pod 'HaishinKit'
 
 end
 
@@ -13,7 +13,19 @@ target 'UZBroadcastExample' do
 	platform :ios, '10.0'
 	use_frameworks!
 	
-	pod 'LFLiveKit_'
+	pod 'UZBroadcast', :path => './'
 	pod 'SwiftIcons'
+	
+end
+
+post_install do |installer|
+	
+	installer.pods_project.targets.each do |target|
+		if target.name == 'SwiftIcons'
+			target.build_configurations.each do |config|
+				config.build_settings['SWIFT_VERSION'] = '4.0'
+			end
+		end
+	end
 	
 end

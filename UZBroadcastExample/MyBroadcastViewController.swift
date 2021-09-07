@@ -16,7 +16,7 @@ class MyBroadcastViewController: UZBroadcastViewController {
 	let switchButton = NKButton()
 	let mirrorButton = NKButton()
 	let flashButton = NKButton()
-	let beautyButton = NKButton()
+	let filterButton = NKButton()
 	let focusButton = NKButton()
 	let exposureButton = NKButton()
 	let muteButton = NKButton()
@@ -52,9 +52,9 @@ class MyBroadcastViewController: UZBroadcastViewController {
 		flashButton.images[.selected] = UIImage(icon: .googleMaterialDesign(.flashOn), size: iconSize, textColor: .black, backgroundColor: .clear)
 		flashButton.addTarget(self, action: #selector(toggleFlash), for: .touchUpInside)
 		
-		beautyButton.images[.normal] = UIImage(icon: .googleMaterialDesign(.photoFilter), size: iconSize, textColor: .white, backgroundColor: .clear)
-		beautyButton.images[.selected] = UIImage(icon: .googleMaterialDesign(.photoFilter), size: iconSize, textColor: .black, backgroundColor: .clear)
-		beautyButton.addTarget(self, action: #selector(toggleBeauty), for: .touchUpInside)
+		filterButton.images[.normal] = UIImage(icon: .googleMaterialDesign(.photoFilter), size: iconSize, textColor: .white, backgroundColor: .clear)
+		filterButton.images[.selected] = UIImage(icon: .googleMaterialDesign(.photoFilter), size: iconSize, textColor: .black, backgroundColor: .clear)
+		filterButton.addTarget(self, action: #selector(toggleFilter), for: .touchUpInside)
 		
 		muteButton.images[.normal] = UIImage(icon: .googleMaterialDesign(.volumeMute), size: iconSize, textColor: .white, backgroundColor: .clear)
 		muteButton.images[.selected] = UIImage(icon: .googleMaterialDesign(.volumeMute), size: iconSize, textColor: .black, backgroundColor: .clear)
@@ -68,7 +68,7 @@ class MyBroadcastViewController: UZBroadcastViewController {
 		exposureButton.images[.selected] = UIImage(icon: .googleMaterialDesign(.exposure), size: iconSize, textColor: .black, backgroundColor: .clear)
 		exposureButton.addTarget(self, action: #selector(toggleAutoExposure), for: .touchUpInside)
 		
-		let buttons = [flashButton, beautyButton, switchButton, mirrorButton, focusButton, exposureButton, muteButton]
+		let buttons = [flashButton, filterButton, switchButton, mirrorButton, focusButton, exposureButton, muteButton]
 		buttons.forEach {
 			$0.titleColors[.normal] = .white
 			$0.titleColors[.selected] = .black
@@ -89,12 +89,17 @@ class MyBroadcastViewController: UZBroadcastViewController {
 		view.addSubview(frameLayout)
 		
 		(frameLayout + 0).flexible()
+		(frameLayout + statusLabel).with {
+			$0.alignment = (.center, .center)
+			$0.extendSize = CGSize(width: 8, height: 4)
+		}
 		frameLayout + HStackLayout {
 			$0 + buttons
 			$0.distribution = .center
 			$0.spacing = 10
 		}
 		
+		frameLayout.spacing = 16
 		frameLayout.padding(top: 30, left: 16, bottom: 48, right: 16)
 	}
 	
@@ -105,16 +110,11 @@ class MyBroadcastViewController: UZBroadcastViewController {
 	
 	override func viewDidLayoutSubviews() {
 		super.viewDidLayoutSubviews()
+		frameLayout.frame = view.bounds
 		
 		let viewSize = view.bounds.size
 		let buttonSize = CGSize(width: 33, height: 33)
 		closeButton.frame = CGRect(x: viewSize.width - buttonSize.width - 15, y: 40, width: buttonSize.width, height: buttonSize.height)
-		frameLayout.frame = view.bounds
-		
-		var labelSize = statusLabel.sizeThatFits(viewSize)
-		labelSize.width += 8
-		labelSize.height += 4
-		statusLabel.frame = CGRect(x: (viewSize.width - labelSize.width)/2, y: 50, width: labelSize.width, height: labelSize.height)
 	}
 	
 	func showStatus(_ string: String) {
@@ -145,12 +145,12 @@ class MyBroadcastViewController: UZBroadcastViewController {
 	
 	func updateButtons() {
 		switchButton.isSelected = cameraPosition == .back
-		beautyButton.isSelected = session.beautyFace
-		mirrorButton.isSelected = session.mirror
-		flashButton.isSelected = session.torch
-		focusButton.isSelected = session.continuousAutoFocus
-		exposureButton.isSelected = session.continuousAutoExposure
-		muteButton.isSelected = session.muted
+//		filterButton.isSelected = rtmpStream.beautyFace
+		mirrorButton.isSelected = isMirror
+		flashButton.isSelected = torch
+		focusButton.isSelected = isAutoFocus
+		exposureButton.isSelected = isAutoExposure
+		muteButton.isSelected = isMuted
 	}
 	
 	@objc func switchCamera() {
@@ -158,49 +158,47 @@ class MyBroadcastViewController: UZBroadcastViewController {
 		updateButtons()
 	}
 	
-	@objc func toggleBeauty() {
-		session.beautyFace = !session.beautyFace
-		session.beautyLevel = 1.0
-		updateButtons()
-		showStatus(session.beautyFace ? "Beauty On" : "Beauty Off")
+	@objc func toggleFilter() {
+//		rtmpStream.beautyFace = !rtmpStream.beautyFace
+//		rtmpStream.beautyLevel = 1.0
+//		updateButtons()
+//		showStatus(rtmpStream.beautyFace ? "Beauty On" : "Beauty Off")
 	}
 	
 	@objc func toggleMirror() {
-		toggleBeauty()
-		session.mirror = !session.mirror
-		toggleBeauty()
+		isMirror = !isMirror
 		updateButtons()
-		showStatus(session.mirror ? "Mirror On" : "Mirror Off")
+		showStatus(isMirror ? "Mirror On" : "Mirror Off")
 	}
 	
 	@objc func toggleFlash() {
-		session.torch = !session.torch
+		torch = !torch
 		updateButtons()
-		
+
 		if cameraPosition == .front {
 			showStatus("Flash is not available with front camera")
 		}
 		else {
-			showStatus(session.torch ? "Flash On" : "Flash Off")
+			showStatus(torch ? "Flash On" : "Flash Off")
 		}
 	}
 	
 	@objc func toggleAutoFocus() {
-		session.continuousAutoFocus = !session.continuousAutoFocus
+		isAutoFocus = !isAutoFocus
 		updateButtons()
-		showStatus(session.continuousAutoFocus ? "Auto Focus On" : "Auto Focus Off")
+		showStatus(isAutoFocus ? "Auto Focus On" : "Auto Focus Off")
 	}
 	
 	@objc func toggleAutoExposure() {
-		session.continuousAutoExposure = !session.continuousAutoExposure
+		isAutoExposure = !isAutoExposure
 		updateButtons()
-		showStatus(session.continuousAutoExposure ? "Auto Exposure On" : "Auto Exposure Off")
+		showStatus(isAutoExposure ? "Auto Exposure On" : "Auto Exposure Off")
 	}
 	
 	@objc func toggleMute() {
-		session.muted = !session.muted
+		isMuted = !isMuted
 		updateButtons()
-		showStatus(session.muted ? "Muted" : "Unmuted")
+		showStatus(isMuted ? "Muted" : "Unmuted")
 	}
 	
 }

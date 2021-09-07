@@ -7,7 +7,8 @@
 //
 
 import UIKit
-import LFLiveKit_
+import AVFoundation
+import UZBroadcast
 
 struct TableItem {
 	var title: String
@@ -40,7 +41,7 @@ class ViewController: UIViewController {
 	}
 	
 	var videoResolution: UZVideoResolution = ._720
-	var videoBitrate: UZVideoBitrate = ._3000Kbps
+	var videoBitrate: UZVideoBitrate = ._128Kbps
 	var videoFPS: UZVideoFPS = ._30fps
 	
 	var audioBitrate: UZAudioBitrate = ._128Kbps
@@ -48,6 +49,14 @@ class ViewController: UIViewController {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		
+		let session = AVAudioSession.sharedInstance()
+		do {
+			try session.setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker, .allowBluetooth])
+			try session.setActive(true)
+		} catch {
+			print(error)
+		}
 		
 		startButton.setTitle("Start Broadcast", for: .normal)
 		startButton.setTitle("Stop Broadcast", for: .selected)
@@ -154,7 +163,7 @@ class ViewController: UIViewController {
 		
 		let config = UZBroadcastConfig(cameraPosition: .front, videoResolution: videoResolution, videoBitrate: videoBitrate, videoFPS: videoFPS, audioBitrate: audioBitrate, audioSampleRate: audioSampleRate, adaptiveBitrate: true, autoRotate: false)
 		let broadcastViewController = MyBroadcastViewController()
-		broadcastViewController.prepareForBroadcast(config: config).delegate = self
+//		broadcastViewController.prepareForBroadcast(config: config).delegate = self
 //		broadcastViewController.session.beautyFace = true
 		broadcastViewController.modalPresentationStyle = .fullScreen
 		
@@ -173,7 +182,7 @@ class ViewController: UIViewController {
 		startButton.isSelected = true
 		let config = UZBroadcastConfig(cameraPosition: .back, videoResolution: videoResolution, videoBitrate: videoBitrate, videoFPS: videoFPS, audioBitrate: audioBitrate, audioSampleRate: audioSampleRate, adaptiveBitrate: true, autoRotate: false)
 		let broadcaster = UZScreenBroadcast()
-		broadcaster.prepareForBroadcast(config: config).delegate = self
+//		broadcaster.prepareForBroadcast(config: config).delegate = self
 		broadcaster.isCameraEnabled = false
 		broadcaster.isMicrophoneEnabled = false
 		broadcaster.startBroadcast(broadcastURL: url, streamKey: streamKey)
@@ -255,18 +264,3 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 	
 }
 
-extension ViewController: LFLiveSessionDelegate {
-	
-	func liveSession(_ session: LFLiveSession?, debugInfo: LFLiveDebug?) {
-		print("LFLiveState: \(String(describing: debugInfo))")
-	}
-	
-	func liveSession(_ session: LFLiveSession?, errorCode: LFLiveSocketErrorCode) {
-		print("LFLiveState errorCode: \(String(describing: errorCode))")
-	}
-	
-	func liveSession(_ session: LFLiveSession?, liveStateDidChange state: LFLiveState) {
-		print("LFLiveState: \(String(describing: state.rawValue))")
-	}
-	
-}
