@@ -21,6 +21,7 @@ open class UZBroadcastViewController: UIViewController {
 	public var cameraPosition: AVCaptureDevice.Position = .front {
 		didSet {
 			guard cameraPosition != oldValue else { return }
+			rtmpStream.captureSettings[.isVideoMirrored] = cameraPosition == .front && isMirror
 			rtmpStream.attachCamera(DeviceUtil.device(withPosition: cameraPosition)) { error in
 				print(error)
 			}
@@ -161,15 +162,10 @@ open class UZBroadcastViewController: UIViewController {
 	- parameter streamKey: Stream Key
 	*/
 	public func startBroadcast(broadcastURL: URL, streamKey: String) {
-		isBroadcasting = true
 		self.broadcastURL = broadcastURL
 		self.streamKey = streamKey
 		
-//		let stream = LFLiveStreamInfo()
-//		stream.url = broadcastURL.appendingPathComponent(streamKey).absoluteString
-//		session.startLive(stream)
-		
-		UIApplication.shared.isIdleTimerDisabled = true
+		openConnection()
 	}
 	
 	private func startStream() {
@@ -184,6 +180,10 @@ open class UZBroadcastViewController: UIViewController {
 	}
 	
 	private func openConnection() {
+		guard broadcastURL != nil, streamKey != nil else { return }
+		isBroadcasting = true
+		UIApplication.shared.isIdleTimerDisabled = true
+		
 		rtmpConnection.addEventListener(.rtmpStatus, selector: #selector(rtmpStatusHandler), observer: self)
 		rtmpConnection.addEventListener(.ioError, selector: #selector(rtmpErrorHandler), observer: self)
 		rtmpConnection.connect(broadcastURL!.absoluteString)
@@ -199,12 +199,8 @@ open class UZBroadcastViewController: UIViewController {
 	Stop broadcasting
 	*/
 	public func stopBroadcast() {
-//		session.stopLive()
-//		session.running = false
-//		session.delegate = nil
-		
+		closeConnection()
 		isBroadcasting = false
-		
 		UIApplication.shared.isIdleTimerDisabled = false
 	}
 	

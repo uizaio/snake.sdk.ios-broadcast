@@ -161,10 +161,9 @@ class ViewController: UIViewController {
 		UserDefaults.standard.set(url.absoluteString, forKey: "lastUrl")
 		UserDefaults.standard.set(streamKey, forKey: "laststreamKey")
 		
-		let config = UZBroadcastConfig(cameraPosition: .front, videoResolution: videoResolution, videoBitrate: videoBitrate, videoFPS: videoFPS, audioBitrate: audioBitrate, audioSampleRate: audioSampleRate, adaptiveBitrate: true, autoRotate: false)
+		let config = UZBroadcastConfig(cameraPosition: .back, videoResolution: videoResolution, videoBitrate: videoBitrate, videoFPS: videoFPS, audioBitrate: audioBitrate, audioSampleRate: audioSampleRate, adaptiveBitrate: true, autoRotate: false)
 		let broadcastViewController = MyBroadcastViewController()
-//		broadcastViewController.prepareForBroadcast(config: config).delegate = self
-//		broadcastViewController.session.beautyFace = true
+		broadcastViewController.prepareForBroadcast(config: config)
 		broadcastViewController.modalPresentationStyle = .fullScreen
 		
 		present(broadcastViewController, animated: false) {
@@ -182,7 +181,7 @@ class ViewController: UIViewController {
 		startButton.isSelected = true
 		let config = UZBroadcastConfig(cameraPosition: .back, videoResolution: videoResolution, videoBitrate: videoBitrate, videoFPS: videoFPS, audioBitrate: audioBitrate, audioSampleRate: audioSampleRate, adaptiveBitrate: true, autoRotate: false)
 		let broadcaster = UZScreenBroadcast()
-//		broadcaster.prepareForBroadcast(config: config).delegate = self
+		broadcaster.prepareForBroadcast(config: config)
 		broadcaster.isCameraEnabled = false
 		broadcaster.isMicrophoneEnabled = false
 		broadcaster.startBroadcast(broadcastURL: url, streamKey: streamKey)
