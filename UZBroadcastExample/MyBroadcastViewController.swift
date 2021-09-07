@@ -147,7 +147,7 @@ class MyBroadcastViewController: UZBroadcastViewController {
 	
 	func updateButtons() {
 		switchButton.isSelected = cameraPosition == .back
-//		filterButton.isSelected = rtmpStream.beautyFace
+		filterButton.isSelected = videoEffect != nil
 		mirrorButton.isSelected = isMirror
 		flashButton.isSelected = torch
 		focusButton.isSelected = isAutoFocus
@@ -158,8 +158,8 @@ class MyBroadcastViewController: UZBroadcastViewController {
 	@objc func switchCamera() {
 		DispatchQueue.main.async {
 			self.cameraPosition = self.cameraPosition == .front ? .back : .front
-			self.updateButtons()
 		}
+		updateButtons()
 	}
 	
 	@objc func toggleFilter() {

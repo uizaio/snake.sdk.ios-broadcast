@@ -29,7 +29,7 @@ open class UZBroadcastViewController: UIViewController {
 	}
 	
 	public var torch: Bool {
-		get { rtmpStream.torch }
+		get { rtmpStream.torch && cameraPosition == .back }
 		set { rtmpStream.torch = newValue }
 	}
 	
