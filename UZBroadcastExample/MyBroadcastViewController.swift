@@ -156,9 +156,7 @@ class MyBroadcastViewController: UZBroadcastViewController {
 	}
 	
 	@objc func switchCamera() {
-		DispatchQueue.main.async {
-			self.cameraPosition = self.cameraPosition == .front ? .back : .front
-		}
+		cameraPosition = cameraPosition == .front ? .back : .front
 		updateButtons()
 	}
 	

@@ -14,75 +14,83 @@ import ReplayKit
 This class helps you to initialize a livestream session
 */
 open class UZBroadcastViewController: UIViewController {
-	public var broadcastURL: URL?
-	public var streamKey: String?
+	/// Current broadcastURL
+	public private(set) var broadcastURL: URL?
+	/// Current streamKey
+	public private(set) var streamKey: String?
 	
 	/// Set active camera
 	public var cameraPosition: UZCameraPosition = .front {
 		didSet {
 			guard cameraPosition != oldValue else { return }
-			rtmpStream.captureSettings[.isVideoMirrored] = cameraPosition == .front
-			rtmpStream.attachCamera(DeviceUtil.device(withPosition: cameraPosition.asValue())) { error in
-				print(error)
+			DispatchQueue.main.async {
+				self.rtmpStream.captureSettings[.isVideoMirrored] = self.cameraPosition == .front
+				self.rtmpStream.attachCamera(DeviceUtil.device(withPosition: self.cameraPosition.asValue())) { error in
+					print(error)
+				}
 			}
 		}
 	}
-	
+	/// Toggle torch mode
 	public var torch: Bool {
 		get { rtmpStream.torch }
 		set { rtmpStream.torch = newValue }
 	}
-	
+	/// Toggle mirror mode, only apply to front camera
 	public var isMirror: Bool {
 		get { (rtmpStream.captureSettings[.isVideoMirrored] as? Bool) ?? false }
 		set { rtmpStream.captureSettings[.isVideoMirrored] = newValue && cameraPosition == .front }
 	}
-	
+	/// Toggle auto focus, only apply to back camera
 	public var isAutoFocus: Bool {
 		get { (rtmpStream.captureSettings[.continuousAutofocus] as? Bool) ?? false }
 		set { rtmpStream.captureSettings[.continuousAutofocus] = newValue }
 	}
-
+	/// Toggle auto exposure, only apply to back camera
 	public var isAutoExposure: Bool {
 		get { (rtmpStream.captureSettings[.continuousExposure] as? Bool) ?? false }
 		set { rtmpStream.captureSettings[.continuousExposure] = newValue }
 	}
-	
+	/// Toggle audio mute
 	public var isMuted: Bool {
 		get { (rtmpStream.audioSettings[.muted] as? Bool) ?? false }
 		set { rtmpStream.audioSettings[.muted] = newValue }
 	}
-	
+	/// Pause or unpause streaming
 	public var isPaused: Bool {
 		get { rtmpStream.paused }
 		set { rtmpStream.paused = newValue }
 	}
-	
+	/// Video Bitrate
 	public var videoBitrate: UInt32? {
 		get { rtmpStream.videoSettings[.bitrate] as? UInt32 }
 		set { rtmpStream.videoSettings[.bitrate] = newValue }
 	}
-	
+	/// Video FPS settings. To get actual FPS, use currentFPS
 	public var videoFPS: UInt? {
 		get { rtmpStream.captureSettings[.fps] as? UInt }
 		set { rtmpStream.captureSettings[.fps] = newValue }
 	}
-	
+	/// Current FPS of the stream
+	public var currentFPS: UInt16 {
+		get { rtmpStream.currentFPS }
+	}
+	/// Audio Bitrate
 	public var audioBitrate: UInt32? {
 		get { rtmpStream.audioSettings[.bitrate] as? UInt32 }
 		set { rtmpStream.audioSettings[.bitrate] = newValue }
 	}
-	
+	/// Audio SampleRate
 	public var audioSampleRate: UInt32? {
 		get { rtmpStream.audioSettings[.sampleRate] as? UInt32 }
 		set { rtmpStream.audioSettings[.sampleRate] = newValue }
 	}
-	
+	/// Video gravity mode
 	public var videoGravity: AVLayerVideoGravity {
 		get { lfView.videoGravity }
 		set { lfView.videoGravity = newValue }
 	}
-	
+	/// Video Effect applied to the stream
 	public var videoEffect: VideoEffect? {
 		didSet {
 			if let oldEffect = oldValue {
@@ -129,38 +137,45 @@ open class UZBroadcastViewController: UIViewController {
 	
 	// MARK: -
 	
-	/**
-	Request accessing for video
-	*/
-	open func requestAccessForVideo() {
+	func requestAccessForVideo() -> Bool {
 		let status = AVCaptureDevice.authorizationStatus(for: AVMediaType.video)
 		switch status {
 			case AVAuthorizationStatus.notDetermined:
 				AVCaptureDevice.requestAccess(for: AVMediaType.video, completionHandler: { (granted) in
 					if granted {
-						self.startStream()
+						if let url = self.broadcastURL, let key = self.streamKey {
+							self.startBroadcast(broadcastURL: url, streamKey: key)
+						}
 					}
 				})
 				
-			case AVAuthorizationStatus.authorized: startStream()
+			case AVAuthorizationStatus.authorized: return true
 			case AVAuthorizationStatus.denied: break
 			case AVAuthorizationStatus.restricted: break
 			@unknown default:break
 		}
+		
+		return false
 	}
 	
-	/**
-	Request accessing for audio
-	*/
-	open func requestAccessForAudio() {
+	func requestAccessForAudio() -> Bool {
 		let status = AVCaptureDevice.authorizationStatus(for: AVMediaType.audio)
 		switch status {
-			case AVAuthorizationStatus.notDetermined: AVCaptureDevice.requestAccess(for: AVMediaType.audio, completionHandler: { (_) in })
-			case AVAuthorizationStatus.authorized: break
+			case AVAuthorizationStatus.notDetermined: AVCaptureDevice.requestAccess(for: AVMediaType.audio, completionHandler: { granted in
+				if granted {
+					if let url = self.broadcastURL, let key = self.streamKey {
+						self.startBroadcast(broadcastURL: url, streamKey: key)
+					}
+				}
+			})
+			
+			case AVAuthorizationStatus.authorized: return true
 			case AVAuthorizationStatus.denied: break
 			case AVAuthorizationStatus.restricted: break
 			@unknown default: break
 		}
+		
+		return false
 	}
 	
 	/**
@@ -179,10 +194,14 @@ open class UZBroadcastViewController: UIViewController {
 	- parameter streamKey: Stream Key
 	*/
 	public func startBroadcast(broadcastURL: URL, streamKey: String) {
+		guard isBroadcasting == false else { return }
+		
 		self.broadcastURL = broadcastURL
 		self.streamKey = streamKey
 		
-		openConnection()
+		if requestAccessForVideo() && requestAccessForAudio() {
+			startStream()
+		}
 	}
 	
 	private func startStream() {
@@ -192,10 +211,12 @@ open class UZBroadcastViewController: UIViewController {
 		rtmpStream.attachCamera(DeviceUtil.device(withPosition: cameraPosition.asValue())) { error in
 			print(error)
 		}
-		rtmpStream.addObserver(self, forKeyPath: "currentFPS", options: .new, context: nil)
+//		rtmpStream.addObserver(self, forKeyPath: "currentFPS", options: .new, context: nil)
 		
 		lfView.videoGravity = .resizeAspectFill
 		lfView.attachStream(rtmpStream)
+		
+		openConnection()
 	}
 	
 	private func openConnection() {
@@ -240,7 +261,7 @@ open class UZBroadcastViewController: UIViewController {
 	open override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
 		
-		rtmpStream.removeObserver(self, forKeyPath: "currentFPS")
+//		rtmpStream.removeObserver(self, forKeyPath: "currentFPS")
 		rtmpStream.close()
 		rtmpStream.dispose()
 		
@@ -320,11 +341,11 @@ open class UZBroadcastViewController: UIViewController {
 		 rtmpStream.receiveVideo = true
 	}
 	
-	open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
-		if Thread.isMainThread {
-			print("currentFPS: \(rtmpStream.currentFPS)")
-		}
-	}
+//	open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
+//		if Thread.isMainThread {
+//			print("currentFPS: \(rtmpStream.currentFPS)")
+//		}
+//	}
 	
 	func tapScreen(_ gesture: UIGestureRecognizer) {
 		guard let gestureView = gesture.view, gesture.state == .ended else { return }
