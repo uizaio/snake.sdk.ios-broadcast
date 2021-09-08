@@ -9,6 +9,7 @@
 import UIKit
 import HaishinKit
 import ReplayKit
+import VideoToolbox
 
 /**
 This class helps you to initialize a screen broadcast session
@@ -123,17 +124,15 @@ public class UZScreenBroadcast {
 	- parameter completionHandler: Block called when completed, returns `Error` if occured
 	*/
 	public func startBroadcast(broadcastURL: URL, streamKey: String, completionHandler: ((Error?) -> Void)? = nil) {
-		isBroadcasting = true
 		guard isBroadcasting == false else { return }
-		
 		self.broadcastURL = broadcastURL
 		self.streamKey = streamKey
 		
 		openConnection()
 		
 		screenRecorder.isCameraEnabled = false
-		screenRecorder.startCapture(handler: { [weak self] (sampleBuffer, bufferType, error) in
-			self?.processSampleBuffer(sampleBuffer, with: bufferType)
+		screenRecorder.startCapture(handler: { (sampleBuffer, bufferType, error) in
+			self.processSampleBuffer(sampleBuffer, with: bufferType)
 		}, completionHandler: completionHandler)
 		
 //		#if os(macOS)
@@ -151,8 +150,7 @@ public class UZScreenBroadcast {
 					self.rtmpStream.videoSettings = [
 						.width: dimensions.width,
 						.height: dimensions.height,
-//						.bitrate: self.config.videoBitrate,
-//						.profileLevel: kVTProfileLevel_H264_Baseline_AutoLevel
+						.profileLevel: kVTProfileLevel_H264_Baseline_AutoLevel
 					]
 				}
 				self.rtmpStream.appendSampleBuffer(sampleBuffer, withType: .video)

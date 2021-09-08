@@ -32,7 +32,7 @@ enum TableSectionType: String {
 class ViewController: UIViewController {
 	let tableView = UITableView(frame: .zero, style: .grouped)
 	let startButton = UIButton(type: .system)
-//	let squareView = UIView()
+	let squareView = UIView()
 	
 	var sections: [TableSection] = [] {
 		didSet {
@@ -65,7 +65,7 @@ class ViewController: UIViewController {
 		tableView.delegate = self
 		tableView.dataSource = self
 		
-//		squareView.backgroundColor = .purple
+		squareView.backgroundColor = .purple
 		
 		view.addSubview(tableView)
 		view.addSubview(startButton)
@@ -81,11 +81,10 @@ class ViewController: UIViewController {
 		startButton.frame = CGRect(x: 10, y: viewSize.height - buttonSize.height - 20, width: viewSize.width - 20, height: buttonSize.height)
 		tableView.frame = view.bounds.inset(by: UIEdgeInsets(top: 0, left: 0, bottom: buttonSize.height + 20, right: 0))
 		
-//		let squareSize = CGSize(width: 100, height: 100)
-//		squareView.frame = CGRect(x: (viewSize.width - squareSize.width)/2, y: viewSize.height - squareSize.height - buttonSize.height - 50, width: squareSize.width, height: squareSize.height)
+		let squareSize = CGSize(width: 100, height: 100)
+		squareView.frame = CGRect(x: (viewSize.width - squareSize.width)/2, y: viewSize.height - squareSize.height - buttonSize.height - 50, width: squareSize.width, height: squareSize.height)
 	}
 	
-	/*
 	func startRotating() {
 		squareView.layer.removeAllAnimations()
 		let rotate = CABasicAnimation(keyPath: "transform.rotation.z")
@@ -99,19 +98,15 @@ class ViewController: UIViewController {
 	func stopRotating() {
 		squareView.layer.removeAllAnimations()
 	}
-	*/
 	
 	@objc func onStart() {
-		/*
 		if #available(iOS 13.0, *) {
-			if screenBroadcaster.isBroadcasting || startButton.isSelected {
+			if startButton.isSelected {
 				stopRotating()
-				screenBroadcaster.stopBroadcast()
 				startButton.isSelected = false
 				return
 			}
 		}
-		*/
 		
 		let alertController = UIAlertController(title: "Start broadcast", message: "Please enter your broadcast URL", preferredStyle: .alert)
 		alertController.addTextField { (textField) in
@@ -135,16 +130,16 @@ class ViewController: UIViewController {
 			self?.startBroadcasting(url: url, streamKey: streamKey)
 			alertController.dismiss(animated: true, completion: nil)
 		}))
-		/*
-		if #available(iOS 13.0, *) {
-			alertController.addAction(UIAlertAction(title: "Screen Broadcast", style: .default, handler: { [weak self] (action) in
-				guard let textFields = alertController.textFields else { return }
-				guard let url = URL(string: textFields.first?.text ?? ""), let streamKey = textFields.last?.text else { return }
-				self?.startScreenBroadcasting(url: url, streamKey: streamKey)
-				alertController.dismiss(animated: true, completion: nil)
-			}))
-		}
-		*/
+		
+//		if #available(iOS 13.0, *) {
+//			alertController.addAction(UIAlertAction(title: "Screen Broadcast", style: .default, handler: { [weak self] (action) in
+//				guard let textFields = alertController.textFields else { return }
+//				guard let url = URL(string: textFields.first?.text ?? ""), let streamKey = textFields.last?.text else { return }
+//				self?.startScreenBroadcasting(url: url, streamKey: streamKey)
+//				alertController.dismiss(animated: true, completion: nil)
+//			}))
+//		}
+		
 		present(alertController, animated: true, completion: nil)
 	}
 	
@@ -173,7 +168,7 @@ class ViewController: UIViewController {
 	
 	@available(iOS 13.0, *)
 	func startScreenBroadcasting(url: URL, streamKey: String) {
-//		startRotating()
+		startRotating()
 		
 		UserDefaults.standard.set(url.absoluteString, forKey: "lastUrl")
 		UserDefaults.standard.set(streamKey, forKey: "laststreamKey")
@@ -184,7 +179,9 @@ class ViewController: UIViewController {
 		broadcaster.prepareForBroadcast(config: config)
 		broadcaster.isCameraEnabled = false
 		broadcaster.isMicrophoneEnabled = false
-		broadcaster.startBroadcast(broadcastURL: url, streamKey: streamKey)
+		broadcaster.startBroadcast(broadcastURL: url, streamKey: streamKey) { error in
+			print("Error: \(String(describing: error))")
+		}
 	}
 	
 	func switchValue(index: Int, for option: TableItem) {

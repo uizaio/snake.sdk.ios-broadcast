@@ -23,6 +23,7 @@ class MyBroadcastViewController: UZBroadcastViewController {
 	let frameLayout = VStackLayout()
 	let statusLabel = UILabel()
 	
+	let beautyEffect = BeautyEffect()
 	let monochromeEffect = MonochromeEffect()
 	
 	override func viewDidLoad() {
@@ -161,9 +162,9 @@ class MyBroadcastViewController: UZBroadcastViewController {
 	}
 	
 	@objc func toggleFilter() {
-		videoEffect = videoEffect == nil ? monochromeEffect : nil
+		videoEffect = videoEffect == nil ? beautyEffect : videoEffect == beautyEffect ? monochromeEffect : nil
 		updateButtons()
-		showStatus(videoEffect != nil ? "Filter On" : "Filter Off")
+		showStatus(videoEffect == beautyEffect ? "Enchanced" : videoEffect == monochromeEffect ? "Monochrome" : "Filter Off")
 	}
 	
 	@objc func toggleMirror() {
