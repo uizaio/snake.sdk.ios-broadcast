@@ -137,6 +137,7 @@ open class UZBroadcastViewController: UIViewController {
 	
 	// MARK: -
 	
+	@discardableResult
 	func requestAccessForVideo() -> Bool {
 		let status = AVCaptureDevice.authorizationStatus(for: AVMediaType.video)
 		switch status {
@@ -158,6 +159,7 @@ open class UZBroadcastViewController: UIViewController {
 		return false
 	}
 	
+	@discardableResult
 	func requestAccessForAudio() -> Bool {
 		let status = AVCaptureDevice.authorizationStatus(for: AVMediaType.audio)
 		switch status {
