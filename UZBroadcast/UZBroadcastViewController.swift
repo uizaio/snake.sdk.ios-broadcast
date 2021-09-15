@@ -13,6 +13,8 @@ import ReplayKit
 /**
 This class helps you to initialize a livestream session
 */
+
+@available(iOSApplicationExtension, unavailable)
 open class UZBroadcastViewController: UIViewController {
 	/// Current broadcastURL
 	public private(set) var broadcastURL: URL?
@@ -365,6 +367,7 @@ open class UZBroadcastViewController: UIViewController {
 
 extension UIApplication {
 	
+	@available(iOSApplicationExtension, unavailable)
 	var interfaceOrientation: UIInterfaceOrientation? {
 		if #available(iOS 13, *) {
 			return UIApplication.shared.windows.first(where: { $0.isKeyWindow })?.windowScene?.interfaceOrientation

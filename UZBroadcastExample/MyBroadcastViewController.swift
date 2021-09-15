@@ -20,7 +20,7 @@ class MyBroadcastViewController: UZBroadcastViewController {
 	let focusButton = NKButton()
 	let exposureButton = NKButton()
 	let muteButton = NKButton()
-	let frameLayout = VStackLayout()
+	let frameLayout = ZStackLayout()
 	let statusLabel = UILabel()
 	
 	let beautyEffect = BeautyEffect()
@@ -37,36 +37,43 @@ class MyBroadcastViewController: UZBroadcastViewController {
 		statusLabel.layer.cornerRadius = 5
 		statusLabel.layer.masksToBounds = true
 		
-		let iconSize = CGSize(width: 32, height: 32)
+		let iconSize = CGSize(width: 24, height: 24)
 		
-		closeButton.images[.normal] = UIImage(icon: .googleMaterialDesign(.close), size: iconSize, textColor: .white, backgroundColor: .clear)
+		closeButton.images[.normal] = UIImage(icon: .googleMaterialDesign(.close), size: CGSize(width: 32, height: 32), textColor: .white, backgroundColor: .clear)
 		closeButton.addTarget(self, action: #selector(askForClose), for: .touchUpInside)
 		closeButton.showsTouchWhenHighlighted = true
 		
+		switchButton.title = "Switch Camera"
 		switchButton.images[.normal] = UIImage(icon: .googleMaterialDesign(.cameraFront), size: iconSize, textColor: .white, backgroundColor: .clear)
 		switchButton.images[.selected] = UIImage(icon: .googleMaterialDesign(.cameraRear), size: iconSize, textColor: .black, backgroundColor: .clear)
 		switchButton.addTarget(self, action: #selector(switchCamera), for: .touchUpInside)
 		
+		mirrorButton.title = "Mirror"
 		mirrorButton.images[.normal] = UIImage(icon: .googleMaterialDesign(.flip), size: iconSize, textColor: .white, backgroundColor: .clear)
 		mirrorButton.images[.selected] = UIImage(icon: .googleMaterialDesign(.flip), size: iconSize, textColor: .black, backgroundColor: .clear)
 		mirrorButton.addTarget(self, action: #selector(toggleMirror), for: .touchUpInside)
 		
+		flashButton.title = "Flash"
 		flashButton.images[.normal] = UIImage(icon: .googleMaterialDesign(.flashOff), size: iconSize, textColor: .white, backgroundColor: .clear)
 		flashButton.images[.selected] = UIImage(icon: .googleMaterialDesign(.flashOn), size: iconSize, textColor: .black, backgroundColor: .clear)
 		flashButton.addTarget(self, action: #selector(toggleFlash), for: .touchUpInside)
 		
+		filterButton.title = "Filter"
 		filterButton.images[.normal] = UIImage(icon: .googleMaterialDesign(.photoFilter), size: iconSize, textColor: .white, backgroundColor: .clear)
 		filterButton.images[.selected] = UIImage(icon: .googleMaterialDesign(.photoFilter), size: iconSize, textColor: .black, backgroundColor: .clear)
 		filterButton.addTarget(self, action: #selector(toggleFilter), for: .touchUpInside)
 		
+		muteButton.title = "Mute"
 		muteButton.images[.normal] = UIImage(icon: .googleMaterialDesign(.volumeMute), size: iconSize, textColor: .white, backgroundColor: .clear)
 		muteButton.images[.selected] = UIImage(icon: .googleMaterialDesign(.volumeMute), size: iconSize, textColor: .black, backgroundColor: .clear)
 		muteButton.addTarget(self, action: #selector(toggleMute), for: .touchUpInside)
 		
+		focusButton.title = "Auto Focus"
 		focusButton.images[.normal] = UIImage(icon: .googleMaterialDesign(.filterCenterFocus), size: iconSize, textColor: .white, backgroundColor: .clear)
 		focusButton.images[.selected] = UIImage(icon: .googleMaterialDesign(.filterCenterFocus), size: iconSize, textColor: .black, backgroundColor: .clear)
 		focusButton.addTarget(self, action: #selector(toggleAutoFocus), for: .touchUpInside)
 		
+		exposureButton.title = "Auto Exposure"
 		exposureButton.images[.normal] = UIImage(icon: .googleMaterialDesign(.exposure), size: iconSize, textColor: .white, backgroundColor: .clear)
 		exposureButton.images[.selected] = UIImage(icon: .googleMaterialDesign(.exposure), size: iconSize, textColor: .black, backgroundColor: .clear)
 		exposureButton.addTarget(self, action: #selector(toggleAutoExposure), for: .touchUpInside)
@@ -80,8 +87,8 @@ class MyBroadcastViewController: UZBroadcastViewController {
 			$0.backgroundColors[.normal] = .clear
 			$0.backgroundColors[.selected] = .white
 			$0.borderSizes[.normal] = 1
-			$0.extendSize = CGSize(width: 4, height: 4)
-			$0.titleFonts[.normal] = .monospacedDigitSystemFont(ofSize: 12, weight: .medium)
+			$0.extendSize = CGSize(width: 8, height: 4)
+			$0.titleFonts[.normal] = .monospacedDigitSystemFont(ofSize: 10, weight: .medium)
 			$0.isRoundedButton = true
 			$0.showsTouchWhenHighlighted = true
 			view.addSubview($0)
@@ -91,15 +98,18 @@ class MyBroadcastViewController: UZBroadcastViewController {
 		view.addSubview(statusLabel)
 		view.addSubview(frameLayout)
 		
-		(frameLayout + 0).flexible()
 		(frameLayout + statusLabel).with {
-			$0.alignment = (.center, .center)
+			$0.alignment = (.bottom, .center)
 			$0.extendSize = CGSize(width: 8, height: 4)
+			$0.padding(top: 0, left: 0, bottom: 80, right: 0)
 		}
-		frameLayout + HStackLayout {
-			$0 + buttons
-			$0.distribution = .center
-			$0.spacing = 10
+		frameLayout + VStackLayout {
+			($0 + 0).flexible()
+			$0 + VStackLayout {
+				($0 + buttons).forEach { $0.alignment = (.center, .right) }
+				$0.distribution = .center
+				$0.spacing = 10
+			}
 		}
 		
 		frameLayout.spacing = 16

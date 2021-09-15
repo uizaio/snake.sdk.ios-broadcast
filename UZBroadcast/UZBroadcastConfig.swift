@@ -65,7 +65,14 @@ public enum UZVideoBitrate: UInt32, CaseIterable {
 	case _128Kbps = 128_000
 	case _256Kbps = 256_000
 	case _512Kbps = 512_000
+	case _640Kbps = 640_000
+	case _768Kbps = 768_000
+	case _896Kbps = 896_000
 	case _1024Kbps = 1_024_000
+	case _1500Kbps = 1_500_000
+	case _2000Kbps = 2_000_000
+	case _3000Kbps = 3_000_000
+	case _4000Kbps = 4_000_000
 	
 	/// Convert to readable string
 	public func toString() -> String {

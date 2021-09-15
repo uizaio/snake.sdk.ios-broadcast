@@ -41,7 +41,7 @@ class ViewController: UIViewController {
 	}
 	
 	var videoResolution: UZVideoResolution = ._720
-	var videoBitrate: UZVideoBitrate = ._128Kbps
+	var videoBitrate: UZVideoBitrate = ._4000Kbps
 	var videoFPS: UZVideoFPS = ._30fps
 	
 	var audioBitrate: UZAudioBitrate = ._128Kbps
@@ -69,7 +69,7 @@ class ViewController: UIViewController {
 		
 		view.addSubview(tableView)
 		view.addSubview(startButton)
-//		view.addSubview(squareView)
+		view.addSubview(squareView)
 		
 		updateValues()
 	}
@@ -131,14 +131,14 @@ class ViewController: UIViewController {
 			alertController.dismiss(animated: true, completion: nil)
 		}))
 		
-//		if #available(iOS 13.0, *) {
-//			alertController.addAction(UIAlertAction(title: "Screen Broadcast", style: .default, handler: { [weak self] (action) in
-//				guard let textFields = alertController.textFields else { return }
-//				guard let url = URL(string: textFields.first?.text ?? ""), let streamKey = textFields.last?.text else { return }
-//				self?.startScreenBroadcasting(url: url, streamKey: streamKey)
-//				alertController.dismiss(animated: true, completion: nil)
-//			}))
-//		}
+		if #available(iOS 13.0, *) {
+			alertController.addAction(UIAlertAction(title: "Screen Broadcast", style: .default, handler: { [weak self] (action) in
+				guard let textFields = alertController.textFields else { return }
+				guard let url = URL(string: textFields.first?.text ?? ""), let streamKey = textFields.last?.text else { return }
+				self?.startScreenBroadcasting(url: url, streamKey: streamKey)
+				alertController.dismiss(animated: true, completion: nil)
+			}))
+		}
 		
 		present(alertController, animated: true, completion: nil)
 	}

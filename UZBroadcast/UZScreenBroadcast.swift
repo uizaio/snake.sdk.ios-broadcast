@@ -92,9 +92,11 @@ public class UZScreenBroadcast {
 			audioBitrate = config.audioBitrate.rawValue
 			audioSampleRate = config.audioSampleRate.rawValue
 			
-			if let orientation = DeviceUtil.videoOrientation(by: UIApplication.shared.statusBarOrientation) {
-				rtmpStream.orientation = orientation
-			}
+//			if let orientation = DeviceUtil.videoOrientation(by: UIApplication.shared.statusBarOrientation) {
+//				rtmpStream.orientation = orientation
+//			}
+			
+			rtmpStream.orientation = .portrait
 			rtmpStream.videoSettings = [
 				.width: config.videoResolution.videoSize.width,
 				.height: config.videoResolution.videoSize.height,
@@ -106,6 +108,7 @@ public class UZScreenBroadcast {
 	internal lazy var rtmpStream = RTMPStream(connection: rtmpConnection)
 	let screenRecorder = RPScreenRecorder.shared()
 	
+	public init() {}
 	
 	/**
 	Always call this first to prepare broadcasting with a configuration
@@ -142,7 +145,7 @@ public class UZScreenBroadcast {
 //		#endif
 	}
 	
-	func processSampleBuffer(_ sampleBuffer: CMSampleBuffer, with sampleBufferType: RPSampleBufferType) {
+	public func processSampleBuffer(_ sampleBuffer: CMSampleBuffer, with sampleBufferType: RPSampleBufferType) {
 		switch sampleBufferType {
 			case .video:
 				if let description = CMSampleBufferGetFormatDescription(sampleBuffer) {
@@ -166,7 +169,7 @@ public class UZScreenBroadcast {
 	private func openConnection() {
 		guard broadcastURL != nil, streamKey != nil else { return }
 		isBroadcasting = true
-		UIApplication.shared.isIdleTimerDisabled = true
+//		UIApplication.shared.isIdleTimerDisabled = true
 		
 		rtmpConnection.addEventListener(.rtmpStatus, selector: #selector(rtmpStatusHandler), observer: self)
 		rtmpConnection.addEventListener(.ioError, selector: #selector(rtmpErrorHandler), observer: self)

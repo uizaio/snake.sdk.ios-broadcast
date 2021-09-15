@@ -18,6 +18,22 @@ target 'UZBroadcastExample' do
 	
 end
 
+target 'UZBroadcastExtension' do
+	platform :ios, '10.0'
+	use_frameworks!
+	
+	pod 'UZBroadcast', :path => './'
+	
+end
+
+target 'UZBroadcastExtensionSetupUI' do
+	platform :ios, '10.0'
+	use_frameworks!
+	
+	pod 'UZBroadcast', :path => './'
+	
+end
+
 post_install do |installer|
 	
 	installer.pods_project.targets.each do |target|

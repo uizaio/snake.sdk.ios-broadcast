@@ -8,10 +8,18 @@
 
 /* Begin PBXBuildFile section */
 		3AF8114ACFB6FBE387A02D6D /* Pods_UZBroadcast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DEE400999D722ECE7374ECEA /* Pods_UZBroadcast.framework */; };
+		51F19478E1EA89EBCE3D7CE8 /* Pods_UZBroadcastExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34411835DEFC4A4B7EA93813 /* Pods_UZBroadcastExtension.framework */; };
 		63402F45242C665A007CE911 /* UZBroadcastConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63402F44242C665A007CE911 /* UZBroadcastConfig.swift */; };
 		63744BAA26E66CEC00F81B82 /* FrameLayoutKit in Frameworks */ = {isa = PBXBuildFile; productRef = 63744BA926E66CEC00F81B82 /* FrameLayoutKit */; };
 		63744BAD26E66D0700F81B82 /* NKButton in Frameworks */ = {isa = PBXBuildFile; productRef = 63744BAC26E66D0700F81B82 /* NKButton */; };
 		63744BAF26E7C96C00F81B82 /* VideoEffects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63744BAE26E7C96C00F81B82 /* VideoEffects.swift */; };
+		63744BCD26EBA7C100F81B82 /* ReplayKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63744BCC26EBA7C100F81B82 /* ReplayKit.framework */; };
+		63744BD026EBA7C100F81B82 /* SampleHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63744BCF26EBA7C100F81B82 /* SampleHandler.swift */; };
+		63744BD726EBA7C200F81B82 /* ReplayKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63744BCC26EBA7C100F81B82 /* ReplayKit.framework */; };
+		63744BD926EBA7C200F81B82 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63744BD826EBA7C200F81B82 /* UIKit.framework */; };
+		63744BDC26EBA7C200F81B82 /* BroadcastSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63744BDB26EBA7C200F81B82 /* BroadcastSetupViewController.swift */; };
+		63744BE026EBA7C200F81B82 /* UZBroadcastExtensionSetupUI.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 63744BD626EBA7C200F81B82 /* UZBroadcastExtensionSetupUI.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		63744BE326EBA7C200F81B82 /* UZBroadcastExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 63744BCB26EBA7C100F81B82 /* UZBroadcastExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		63A995C1243488930042D733 /* UZBroadcastConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63402F44242C665A007CE911 /* UZBroadcastConfig.swift */; };
 		63A995C2243488930042D733 /* UZScreenBroadcast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FD93B72425D88E001B7A48 /* UZScreenBroadcast.swift */; };
 		63A995C3243488930042D733 /* UZBroadcastViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FD92D7241D16BC001B7A48 /* UZBroadcastViewController.swift */; };
@@ -23,15 +31,60 @@
 		63FD93242420CE11001B7A48 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63FD93222420CE11001B7A48 /* LaunchScreen.storyboard */; };
 		63FD9372242370DA001B7A48 /* MyBroadcastViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FD9371242370DA001B7A48 /* MyBroadcastViewController.swift */; };
 		63FD93B82425D88E001B7A48 /* UZScreenBroadcast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FD93B72425D88E001B7A48 /* UZScreenBroadcast.swift */; };
+		A186E905F94EB6546B715DD2 /* Pods_UZBroadcastExtensionSetupUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE354E6692BC2001DEB1700A /* Pods_UZBroadcastExtensionSetupUI.framework */; };
 		BD3DAE0059EADB6B52459B67 /* Pods_UZBroadcastExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42D23A5DD6751578478A96AB /* Pods_UZBroadcastExample.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		63744BDE26EBA7C200F81B82 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 63FD92C2241D1385001B7A48 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 63744BD526EBA7C200F81B82;
+			remoteInfo = UZBroadcastExtensionSetupUI;
+		};
+		63744BE126EBA7C200F81B82 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 63FD92C2241D1385001B7A48 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 63744BCA26EBA7C100F81B82;
+			remoteInfo = UZBroadcastExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		63744BE426EBA7C200F81B82 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				63744BE026EBA7C200F81B82 /* UZBroadcastExtensionSetupUI.appex in Embed App Extensions */,
+				63744BE326EBA7C200F81B82 /* UZBroadcastExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		250FCC1C0D86D0EC2C59F5CF /* Pods-UZBroadcastExtensionSetupUI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UZBroadcastExtensionSetupUI.release.xcconfig"; path = "Target Support Files/Pods-UZBroadcastExtensionSetupUI/Pods-UZBroadcastExtensionSetupUI.release.xcconfig"; sourceTree = "<group>"; };
+		25E678EEA4FF8E80FCAD9FCC /* Pods-UZBroadcastExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UZBroadcastExtension.release.xcconfig"; path = "Target Support Files/Pods-UZBroadcastExtension/Pods-UZBroadcastExtension.release.xcconfig"; sourceTree = "<group>"; };
 		2E212B6466306A27720814CC /* Pods-UZBroadcastExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UZBroadcastExample.release.xcconfig"; path = "Target Support Files/Pods-UZBroadcastExample/Pods-UZBroadcastExample.release.xcconfig"; sourceTree = "<group>"; };
+		34411835DEFC4A4B7EA93813 /* Pods_UZBroadcastExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UZBroadcastExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		427CF2E678418E6042550CAE /* Pods-UZBroadcastExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UZBroadcastExtension.debug.xcconfig"; path = "Target Support Files/Pods-UZBroadcastExtension/Pods-UZBroadcastExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		42D23A5DD6751578478A96AB /* Pods_UZBroadcastExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UZBroadcastExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BE19D75B5A4E6A36325EEE0 /* Pods-UZBroadcast.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UZBroadcast.release.xcconfig"; path = "Target Support Files/Pods-UZBroadcast/Pods-UZBroadcast.release.xcconfig"; sourceTree = "<group>"; };
 		63402F44242C665A007CE911 /* UZBroadcastConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UZBroadcastConfig.swift; sourceTree = "<group>"; };
 		63744BAE26E7C96C00F81B82 /* VideoEffects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoEffects.swift; sourceTree = "<group>"; };
+		63744BCB26EBA7C100F81B82 /* UZBroadcastExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = UZBroadcastExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		63744BCC26EBA7C100F81B82 /* ReplayKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReplayKit.framework; path = System/Library/Frameworks/ReplayKit.framework; sourceTree = SDKROOT; };
+		63744BCF26EBA7C100F81B82 /* SampleHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleHandler.swift; sourceTree = "<group>"; };
+		63744BD126EBA7C100F81B82 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		63744BD626EBA7C200F81B82 /* UZBroadcastExtensionSetupUI.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = UZBroadcastExtensionSetupUI.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		63744BD826EBA7C200F81B82 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		63744BDB26EBA7C200F81B82 /* BroadcastSetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BroadcastSetupViewController.swift; sourceTree = "<group>"; };
+		63744BDD26EBA7C200F81B82 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		63FD92CB241D1385001B7A48 /* UZBroadcast.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = UZBroadcast.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		63FD92CE241D1385001B7A48 /* UZBroadcast.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UZBroadcast.h; sourceTree = "<group>"; };
 		63FD92D7241D16BC001B7A48 /* UZBroadcastViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UZBroadcastViewController.swift; sourceTree = "<group>"; };
@@ -44,11 +97,32 @@
 		63FD9371242370DA001B7A48 /* MyBroadcastViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyBroadcastViewController.swift; sourceTree = "<group>"; };
 		63FD93B72425D88E001B7A48 /* UZScreenBroadcast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UZScreenBroadcast.swift; sourceTree = "<group>"; };
 		86ABEA4CFD0FF5C7E24CD1D9 /* Pods-UZBroadcast.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UZBroadcast.debug.xcconfig"; path = "Target Support Files/Pods-UZBroadcast/Pods-UZBroadcast.debug.xcconfig"; sourceTree = "<group>"; };
+		C73BB36374A06103EBBAE04D /* Pods-UZBroadcastExtensionSetupUI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UZBroadcastExtensionSetupUI.debug.xcconfig"; path = "Target Support Files/Pods-UZBroadcastExtensionSetupUI/Pods-UZBroadcastExtensionSetupUI.debug.xcconfig"; sourceTree = "<group>"; };
 		DEE400999D722ECE7374ECEA /* Pods_UZBroadcast.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UZBroadcast.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EE354E6692BC2001DEB1700A /* Pods_UZBroadcastExtensionSetupUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UZBroadcastExtensionSetupUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE5B5CAE376341EA79C42978 /* Pods-UZBroadcastExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UZBroadcastExample.debug.xcconfig"; path = "Target Support Files/Pods-UZBroadcastExample/Pods-UZBroadcastExample.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		63744BC826EBA7C100F81B82 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				63744BCD26EBA7C100F81B82 /* ReplayKit.framework in Frameworks */,
+				51F19478E1EA89EBCE3D7CE8 /* Pods_UZBroadcastExtension.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		63744BD326EBA7C200F81B82 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				63744BD726EBA7C200F81B82 /* ReplayKit.framework in Frameworks */,
+				63744BD926EBA7C200F81B82 /* UIKit.framework in Frameworks */,
+				A186E905F94EB6546B715DD2 /* Pods_UZBroadcastExtensionSetupUI.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		63FD92C8241D1385001B7A48 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -75,6 +149,10 @@
 			children = (
 				DEE400999D722ECE7374ECEA /* Pods_UZBroadcast.framework */,
 				42D23A5DD6751578478A96AB /* Pods_UZBroadcastExample.framework */,
+				63744BCC26EBA7C100F81B82 /* ReplayKit.framework */,
+				63744BD826EBA7C200F81B82 /* UIKit.framework */,
+				34411835DEFC4A4B7EA93813 /* Pods_UZBroadcastExtension.framework */,
+				EE354E6692BC2001DEB1700A /* Pods_UZBroadcastExtensionSetupUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -86,8 +164,30 @@
 				5BE19D75B5A4E6A36325EEE0 /* Pods-UZBroadcast.release.xcconfig */,
 				FE5B5CAE376341EA79C42978 /* Pods-UZBroadcastExample.debug.xcconfig */,
 				2E212B6466306A27720814CC /* Pods-UZBroadcastExample.release.xcconfig */,
+				427CF2E678418E6042550CAE /* Pods-UZBroadcastExtension.debug.xcconfig */,
+				25E678EEA4FF8E80FCAD9FCC /* Pods-UZBroadcastExtension.release.xcconfig */,
+				C73BB36374A06103EBBAE04D /* Pods-UZBroadcastExtensionSetupUI.debug.xcconfig */,
+				250FCC1C0D86D0EC2C59F5CF /* Pods-UZBroadcastExtensionSetupUI.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		63744BCE26EBA7C100F81B82 /* UZBroadcastExtension */ = {
+			isa = PBXGroup;
+			children = (
+				63744BCF26EBA7C100F81B82 /* SampleHandler.swift */,
+				63744BD126EBA7C100F81B82 /* Info.plist */,
+			);
+			path = UZBroadcastExtension;
+			sourceTree = "<group>";
+		};
+		63744BDA26EBA7C200F81B82 /* UZBroadcastExtensionSetupUI */ = {
+			isa = PBXGroup;
+			children = (
+				63744BDB26EBA7C200F81B82 /* BroadcastSetupViewController.swift */,
+				63744BDD26EBA7C200F81B82 /* Info.plist */,
+			);
+			path = UZBroadcastExtensionSetupUI;
 			sourceTree = "<group>";
 		};
 		63FD92C1241D1385001B7A48 = {
@@ -95,6 +195,8 @@
 			children = (
 				63FD92CD241D1385001B7A48 /* UZBroadcast */,
 				63FD93162420CE0F001B7A48 /* UZBroadcastExample */,
+				63744BCE26EBA7C100F81B82 /* UZBroadcastExtension */,
+				63744BDA26EBA7C200F81B82 /* UZBroadcastExtensionSetupUI */,
 				63FD92CC241D1385001B7A48 /* Products */,
 				5B3EB2491822F118BD363CC5 /* Pods */,
 				2FCBB33BC64087D2F0B7A73B /* Frameworks */,
@@ -106,6 +208,8 @@
 			children = (
 				63FD92CB241D1385001B7A48 /* UZBroadcast.framework */,
 				63FD93152420CE0F001B7A48 /* UZBroadcastExample.app */,
+				63744BCB26EBA7C100F81B82 /* UZBroadcastExtension.appex */,
+				63744BD626EBA7C200F81B82 /* UZBroadcastExtensionSetupUI.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -149,6 +253,42 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		63744BCA26EBA7C100F81B82 /* UZBroadcastExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 63744BEA26EBA7C200F81B82 /* Build configuration list for PBXNativeTarget "UZBroadcastExtension" */;
+			buildPhases = (
+				A5E38C468B877B4C26581375 /* [CP] Check Pods Manifest.lock */,
+				63744BC726EBA7C100F81B82 /* Sources */,
+				63744BC826EBA7C100F81B82 /* Frameworks */,
+				63744BC926EBA7C100F81B82 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = UZBroadcastExtension;
+			productName = UZBroadcastExtension;
+			productReference = 63744BCB26EBA7C100F81B82 /* UZBroadcastExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		63744BD526EBA7C200F81B82 /* UZBroadcastExtensionSetupUI */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 63744BE926EBA7C200F81B82 /* Build configuration list for PBXNativeTarget "UZBroadcastExtensionSetupUI" */;
+			buildPhases = (
+				05F1AF17397CD7B995B7E79E /* [CP] Check Pods Manifest.lock */,
+				63744BD226EBA7C200F81B82 /* Sources */,
+				63744BD326EBA7C200F81B82 /* Frameworks */,
+				63744BD426EBA7C200F81B82 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = UZBroadcastExtensionSetupUI;
+			productName = UZBroadcastExtensionSetupUI;
+			productReference = 63744BD626EBA7C200F81B82 /* UZBroadcastExtensionSetupUI.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		63FD92CA241D1385001B7A48 /* UZBroadcast */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 63FD92D3241D1385001B7A48 /* Build configuration list for PBXNativeTarget "UZBroadcast" */;
@@ -177,10 +317,13 @@
 				63FD93122420CE0F001B7A48 /* Frameworks */,
 				63FD93132420CE0F001B7A48 /* Resources */,
 				6915C160408BD616A7605D6A /* [CP] Embed Pods Frameworks */,
+				63744BE426EBA7C200F81B82 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				63744BDF26EBA7C200F81B82 /* PBXTargetDependency */,
+				63744BE226EBA7C200F81B82 /* PBXTargetDependency */,
 			);
 			name = UZBroadcastExample;
 			packageProductDependencies = (
@@ -197,10 +340,16 @@
 		63FD92C2241D1385001B7A48 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1140;
+				LastSwiftUpdateCheck = 1250;
 				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = Uiza;
 				TargetAttributes = {
+					63744BCA26EBA7C100F81B82 = {
+						CreatedOnToolsVersion = 12.5.1;
+					};
+					63744BD526EBA7C200F81B82 = {
+						CreatedOnToolsVersion = 12.5.1;
+					};
 					63FD92CA241D1385001B7A48 = {
 						CreatedOnToolsVersion = 11.3.1;
 						LastSwiftMigration = 1130;
@@ -229,11 +378,27 @@
 			targets = (
 				63FD92CA241D1385001B7A48 /* UZBroadcast */,
 				63FD93142420CE0F001B7A48 /* UZBroadcastExample */,
+				63744BCA26EBA7C100F81B82 /* UZBroadcastExtension */,
+				63744BD526EBA7C200F81B82 /* UZBroadcastExtensionSetupUI */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		63744BC926EBA7C100F81B82 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		63744BD426EBA7C200F81B82 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		63FD92C9241D1385001B7A48 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -253,6 +418,28 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		05F1AF17397CD7B995B7E79E /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-UZBroadcastExtensionSetupUI-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		6915C160408BD616A7605D6A /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -268,6 +455,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-UZBroadcastExample/Pods-UZBroadcastExample-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A5E38C468B877B4C26581375 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-UZBroadcastExtension-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		D298F02261C56924AEC2D3FD /* [CP] Check Pods Manifest.lock */ = {
@@ -317,6 +526,22 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		63744BC726EBA7C100F81B82 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				63744BD026EBA7C100F81B82 /* SampleHandler.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		63744BD226EBA7C200F81B82 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				63744BDC26EBA7C200F81B82 /* BroadcastSetupViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		63FD92C7241D1385001B7A48 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -343,6 +568,19 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		63744BDF26EBA7C200F81B82 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 63744BD526EBA7C200F81B82 /* UZBroadcastExtensionSetupUI */;
+			targetProxy = 63744BDE26EBA7C200F81B82 /* PBXContainerItemProxy */;
+		};
+		63744BE226EBA7C200F81B82 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 63744BCA26EBA7C100F81B82 /* UZBroadcastExtension */;
+			targetProxy = 63744BE126EBA7C200F81B82 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		63FD93222420CE11001B7A48 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -355,6 +593,94 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		63744BE526EBA7C200F81B82 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 427CF2E678418E6042550CAE /* Pods-UZBroadcastExtension.debug.xcconfig */;
+			buildSettings = {
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 385YL4KG69;
+				INFOPLIST_FILE = UZBroadcastExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.uiza.UZBroadcast.UZBroadcastExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		63744BE626EBA7C200F81B82 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 25E678EEA4FF8E80FCAD9FCC /* Pods-UZBroadcastExtension.release.xcconfig */;
+			buildSettings = {
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 385YL4KG69;
+				INFOPLIST_FILE = UZBroadcastExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.uiza.UZBroadcast.UZBroadcastExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		63744BE726EBA7C200F81B82 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C73BB36374A06103EBBAE04D /* Pods-UZBroadcastExtensionSetupUI.debug.xcconfig */;
+			buildSettings = {
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 385YL4KG69;
+				INFOPLIST_FILE = UZBroadcastExtensionSetupUI/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.uiza.UZBroadcast.UZBroadcastExtensionSetupUI;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		63744BE826EBA7C200F81B82 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 250FCC1C0D86D0EC2C59F5CF /* Pods-UZBroadcastExtensionSetupUI.release.xcconfig */;
+			buildSettings = {
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 385YL4KG69;
+				INFOPLIST_FILE = UZBroadcastExtensionSetupUI/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.uiza.UZBroadcast.UZBroadcastExtensionSetupUI;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		63FD92D1241D1385001B7A48 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -479,6 +805,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 86ABEA4CFD0FF5C7E24CD1D9 /* Pods-UZBroadcast.debug.xcconfig */;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
@@ -508,6 +835,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5BE19D75B5A4E6A36325EEE0 /* Pods-UZBroadcast.release.xcconfig */;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
@@ -536,6 +864,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FE5B5CAE376341EA79C42978 /* Pods-UZBroadcastExample.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 385YL4KG69;
@@ -545,6 +874,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.uiza.UZBroadcast;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -556,6 +886,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2E212B6466306A27720814CC /* Pods-UZBroadcastExample.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 385YL4KG69;
@@ -565,6 +896,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.uiza.UZBroadcast;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -575,6 +907,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		63744BE926EBA7C200F81B82 /* Build configuration list for PBXNativeTarget "UZBroadcastExtensionSetupUI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				63744BE726EBA7C200F81B82 /* Debug */,
+				63744BE826EBA7C200F81B82 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		63744BEA26EBA7C200F81B82 /* Build configuration list for PBXNativeTarget "UZBroadcastExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				63744BE526EBA7C200F81B82 /* Debug */,
+				63744BE626EBA7C200F81B82 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		63FD92C5241D1385001B7A48 /* Build configuration list for PBXProject "UZBroadcast" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
