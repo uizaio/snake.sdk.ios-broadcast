@@ -47,3 +47,31 @@ extension UIDevice {
 	}
 	
 }
+
+extension UIWindow {
+	
+	static var keyWindow: UIWindow? {
+		if #available(iOS 13, *) {
+			return UIApplication.shared.windows.first { $0.isKeyWindow }
+		}
+		else {
+			return UIApplication.shared.keyWindow
+		}
+	}
+	
+}
+
+extension UIViewController {
+	
+	class func topPresented(window: UIWindow? = nil) -> UIViewController? {
+		guard let window = window ?? UIWindow.keyWindow, let viewController = window.rootViewController else { return nil }
+		
+		var result: UIViewController? = viewController
+		while result?.presentedViewController != nil {
+			result = result?.presentedViewController
+		}
+		
+		return result
+	}
+	
+}

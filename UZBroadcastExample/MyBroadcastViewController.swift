@@ -254,7 +254,7 @@ class MyBroadcastViewController: UZBroadcastViewController {
 	
 	// MARK: -
 	
-	override var shouldAutorotate: Bool { true }
+	override var shouldAutorotate: Bool { config.autoRotate }
 	override var supportedInterfaceOrientations: UIInterfaceOrientationMask { .all }
 	
 }
@@ -274,6 +274,15 @@ final class RecorderDelegate: DefaultAVRecorderDelegate {
 		PHPhotoLibrary.shared().performChanges({() -> Void in
 			PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: writer.outputURL)
 		}, completionHandler: { _, error -> Void in
+			DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+				if let error = error {
+					self.showAlert(message: "Unable to save video: \(error.localizedDescription)")
+				}
+				else {
+					self.showAlert(message: "Video successfully saved to Photos")
+				}
+			}
+			
 			do {
 				try FileManager.default.removeItem(at: writer.outputURL)
 			} catch {
@@ -281,4 +290,11 @@ final class RecorderDelegate: DefaultAVRecorderDelegate {
 			}
 		})
 	}
+	
+	func showAlert(message: String) {
+		let alertControl = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+		alertControl.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+		UIViewController.topPresented()?.present(alertControl, animated: true, completion: nil)
+	}
+	
 }
