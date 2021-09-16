@@ -229,4 +229,9 @@ class MyBroadcastViewController: UZBroadcastViewController {
 		showStatus(isMuted ? "Muted" : "Unmuted")
 	}
 	
+	// MARK: -
+	
+	override var shouldAutorotate: Bool { true }
+	override var supportedInterfaceOrientations: UIInterfaceOrientationMask { .all }
+	
 }

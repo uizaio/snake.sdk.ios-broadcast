@@ -15,7 +15,7 @@ This class helps you to initialize a livestream session
 */
 
 @available(iOSApplicationExtension, unavailable)
-open class UZBroadcastViewController: UIViewController {
+open class UZBroadcastViewController: UIViewController, RTMPStreamDelegate {
 	/// Current broadcastURL
 	public private(set) var broadcastURL: URL?
 	/// Current streamKey
@@ -66,8 +66,13 @@ open class UZBroadcastViewController: UIViewController {
 	/// Video Bitrate
 	public var videoBitrate: UInt32? {
 		get { rtmpStream.videoSettings[.bitrate] as? UInt32 }
-		set { rtmpStream.videoSettings[.bitrate] = newValue }
+		set {
+			rtmpStream.videoSettings[.bitrate] = newValue
+			if let value = newValue, minVideoBitrate == nil { minVideoBitrate = value / 8 }
+		}
 	}
+	/// Minimum Video Bitrate (is used when `adaptiveBitrate` is `true`)
+	public var minVideoBitrate: UInt32?
 	/// Video FPS settings. To get actual FPS, use currentFPS
 	public var videoFPS: UInt? {
 		get { rtmpStream.captureSettings[.fps] as? UInt }
@@ -209,6 +214,7 @@ open class UZBroadcastViewController: UIViewController {
 	}
 	
 	private func startStream() {
+		rtmpStream.delegate = self
 		rtmpStream.attachAudio(AVCaptureDevice.default(for: .audio)) { error in
 			print(error)
 		}
@@ -285,11 +291,9 @@ open class UZBroadcastViewController: UIViewController {
 	}
 
 	
-	// MARK: -
+	// MARK: - StatusBar & Rotation Handler
 	
-	open override var preferredStatusBarStyle: UIStatusBarStyle {
-		return .lightContent
-	}
+	open override var preferredStatusBarStyle: UIStatusBarStyle { .lightContent }
 	
 	open override var shouldAutorotate: Bool {
 		return config.autoRotate ?? (UIDevice.current.userInterfaceIdiom == .pad)
@@ -303,7 +307,7 @@ open class UZBroadcastViewController: UIViewController {
 		return UIDevice.current.userInterfaceIdiom == .pad ? UIApplication.shared.interfaceOrientation ?? .portrait : .portrait
 	}
 	
-	// MARK: -
+	// MARK: - Events
 	
 	var retryCount = 0
 	var maxRetryCount = 5
@@ -335,6 +339,19 @@ open class UZBroadcastViewController: UIViewController {
 	@objc private func onOrientationChanged(_ notification: Notification) {
 		guard let orientation = DeviceUtil.videoOrientation(by: UIApplication.shared.statusBarOrientation) else { return }
 		rtmpStream.orientation = orientation
+		
+		if orientation == .landscapeLeft || orientation == .landscapeRight {
+			rtmpStream.videoSettings = [
+				.width: config.videoResolution.videoSize.height,
+				.height: config.videoResolution.videoSize.width,
+			]
+		}
+		else {
+			rtmpStream.videoSettings = [
+				.width: config.videoResolution.videoSize.width,
+				.height: config.videoResolution.videoSize.height,
+			]
+		}
 	}
 	
 	@objc private func didEnterBackground(_ notification: Notification) {
@@ -358,6 +375,32 @@ open class UZBroadcastViewController: UIViewController {
 		print("pointOfInterest: \(pointOfInterest)")
 		rtmpStream.setPointOfInterest(pointOfInterest, exposure: pointOfInterest)
 	}
+	
+	// MARK: - RTMPStreamDelegate
+	
+	public func rtmpStream(_ stream: RTMPStream, didPublishInsufficientBW connection: RTMPConnection) {
+		guard config.adaptiveBitrate, let currentBitrate = rtmpStream.videoSettings[.bitrate] as? UInt32 else { return }
+		let value = max(minVideoBitrate ?? currentBitrate, currentBitrate / 2)
+		guard value != currentBitrate else { return }
+		
+		stream.videoSettings[.bitrate] = value
+		print("bitRate decreased: \(value)kps")
+	}
+	
+	public func rtmpStream(_ stream: RTMPStream, didPublishSufficientBW connection: RTMPConnection) {
+		guard config.adaptiveBitrate, let currentBitrate = rtmpStream.videoSettings[.bitrate] as? UInt32 else { return }
+		let value = min(videoBitrate ?? currentBitrate, currentBitrate * 2)
+		guard value != currentBitrate else { return }
+		
+		stream.videoSettings[.bitrate] = value
+		print("bitRate increased: \(value)kps")
+	}
+	
+	public func rtmpStreamDidClear(_ stream: RTMPStream) {
+		
+	}
+	
+	// MARK: -
 	
 	deinit {
 		NotificationCenter.default.removeObserver(self)
