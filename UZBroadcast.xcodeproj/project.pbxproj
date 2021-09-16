@@ -10,6 +10,7 @@
 		3AF8114ACFB6FBE387A02D6D /* Pods_UZBroadcast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DEE400999D722ECE7374ECEA /* Pods_UZBroadcast.framework */; };
 		51F19478E1EA89EBCE3D7CE8 /* Pods_UZBroadcastExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34411835DEFC4A4B7EA93813 /* Pods_UZBroadcastExtension.framework */; };
 		63402F45242C665A007CE911 /* UZBroadcastConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63402F44242C665A007CE911 /* UZBroadcastConfig.swift */; };
+		635036C526F3587500AF3E2F /* UIView+ExtendSafeEdgeInsets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635036C426F3587400AF3E2F /* UIView+ExtendSafeEdgeInsets.swift */; };
 		63744BAA26E66CEC00F81B82 /* FrameLayoutKit in Frameworks */ = {isa = PBXBuildFile; productRef = 63744BA926E66CEC00F81B82 /* FrameLayoutKit */; };
 		63744BAD26E66D0700F81B82 /* NKButton in Frameworks */ = {isa = PBXBuildFile; productRef = 63744BAC26E66D0700F81B82 /* NKButton */; };
 		63744BAF26E7C96C00F81B82 /* VideoEffects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63744BAE26E7C96C00F81B82 /* VideoEffects.swift */; };
@@ -76,6 +77,7 @@
 		42D23A5DD6751578478A96AB /* Pods_UZBroadcastExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UZBroadcastExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BE19D75B5A4E6A36325EEE0 /* Pods-UZBroadcast.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UZBroadcast.release.xcconfig"; path = "Target Support Files/Pods-UZBroadcast/Pods-UZBroadcast.release.xcconfig"; sourceTree = "<group>"; };
 		63402F44242C665A007CE911 /* UZBroadcastConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UZBroadcastConfig.swift; sourceTree = "<group>"; };
+		635036C426F3587400AF3E2F /* UIView+ExtendSafeEdgeInsets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+ExtendSafeEdgeInsets.swift"; sourceTree = "<group>"; };
 		63744BAE26E7C96C00F81B82 /* VideoEffects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoEffects.swift; sourceTree = "<group>"; };
 		63744BCB26EBA7C100F81B82 /* UZBroadcastExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = UZBroadcastExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		63744BCC26EBA7C100F81B82 /* ReplayKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReplayKit.framework; path = System/Library/Frameworks/ReplayKit.framework; sourceTree = SDKROOT; };
@@ -231,6 +233,7 @@
 				63FD93172420CE0F001B7A48 /* AppDelegate.swift */,
 				63744BAE26E7C96C00F81B82 /* VideoEffects.swift */,
 				63FD9371242370DA001B7A48 /* MyBroadcastViewController.swift */,
+				635036C426F3587400AF3E2F /* UIView+ExtendSafeEdgeInsets.swift */,
 				63FD931B2420CE0F001B7A48 /* ViewController.swift */,
 				63FD93202420CE11001B7A48 /* Assets.xcassets */,
 				63FD93222420CE11001B7A48 /* LaunchScreen.storyboard */,
@@ -562,6 +565,7 @@
 				63A995C1243488930042D733 /* UZBroadcastConfig.swift in Sources */,
 				63A995C2243488930042D733 /* UZScreenBroadcast.swift in Sources */,
 				63FD9372242370DA001B7A48 /* MyBroadcastViewController.swift in Sources */,
+				635036C526F3587500AF3E2F /* UIView+ExtendSafeEdgeInsets.swift in Sources */,
 				63A995C3243488930042D733 /* UZBroadcastViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

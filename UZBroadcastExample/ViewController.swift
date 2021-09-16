@@ -27,6 +27,9 @@ enum TableSectionType: String {
 	case videoFPS = "FPS"
 	case audioBitrate = "Bitrate "
 	case audioSampleRate = "SampleRate"
+	case adaptiveBitrate = "Adaptive Bitrate"
+	case autoRotate = "Auto rotation"
+	case saveToLocal = "Save to local"
 }
 
 class ViewController: UIViewController {
@@ -43,9 +46,11 @@ class ViewController: UIViewController {
 	var videoResolution: UZVideoResolution = ._720
 	var videoBitrate: UZVideoBitrate = ._4000Kbps
 	var videoFPS: UZVideoFPS = ._30fps
-	
 	var audioBitrate: UZAudioBitrate = ._128Kbps
 	var audioSampleRate: UZAudioSampleRate = ._44_1khz
+	var adaptiveBitrate = true
+	var saveToLocal = false
+	var autoRotate = true
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -65,6 +70,7 @@ class ViewController: UIViewController {
 		tableView.delegate = self
 		tableView.dataSource = self
 		
+		squareView.isHidden = true
 		squareView.backgroundColor = .purple
 		
 		view.addSubview(tableView)
@@ -86,6 +92,7 @@ class ViewController: UIViewController {
 	}
 	
 	func startRotating() {
+		squareView.isHidden = false
 		squareView.layer.removeAllAnimations()
 		let rotate = CABasicAnimation(keyPath: "transform.rotation.z")
 		rotate.duration = 3.0
@@ -149,14 +156,27 @@ class ViewController: UIViewController {
 														 TableItem(title: TableSectionType.videoFPS.rawValue, value: videoFPS.toString(), options: UZVideoFPS.allCases.compactMap({ return $0.toString() }))]),
 					
 					TableSection(title: "Audio", items: [TableItem(title: TableSectionType.audioBitrate.rawValue, value: audioBitrate.toString(), options: UZAudioBitrate.allCases.compactMap({ return $0.toString() })),
-														 TableItem(title: TableSectionType.audioSampleRate.rawValue, value: audioSampleRate.toString(), options: UZAudioSampleRate.allCases.compactMap({ return $0.toString() }))])]
+														 TableItem(title: TableSectionType.audioSampleRate.rawValue, value: audioSampleRate.toString(), options: UZAudioSampleRate.allCases.compactMap({ return $0.toString() }))]),
+		
+					TableSection(title: "Option", items: [TableItem(title: TableSectionType.adaptiveBitrate.rawValue, value: adaptiveBitrate.toString(), options: [true, false].compactMap({ return $0.toString() })),
+														  TableItem(title: TableSectionType.autoRotate.rawValue, value: autoRotate.toString(), options: [true, false].compactMap({ return $0.toString() })),
+														  TableItem(title: TableSectionType.saveToLocal.rawValue, value: saveToLocal.toString(), options: [true, false].compactMap({ return $0.toString() }))])]
 	}
 	
 	func startBroadcasting(url: URL, streamKey: String) {
 		UserDefaults.standard.set(url.absoluteString, forKey: "lastUrl")
 		UserDefaults.standard.set(streamKey, forKey: "laststreamKey")
 		
-		let config = UZBroadcastConfig(cameraPosition: .front, videoResolution: videoResolution, videoBitrate: videoBitrate, videoFPS: videoFPS, audioBitrate: audioBitrate, audioSampleRate: audioSampleRate, adaptiveBitrate: true, autoRotate: true)
+		let config = UZBroadcastConfig(cameraPosition: .front,
+									   videoResolution: videoResolution,
+									   videoBitrate: videoBitrate,
+									   videoFPS: videoFPS,
+									   audioBitrate: audioBitrate,
+									   audioSampleRate: audioSampleRate,
+									   adaptiveBitrate: adaptiveBitrate,
+									   autoRotate: autoRotate,
+									   saveToLocal: saveToLocal)
+		
 		let broadcastViewController = MyBroadcastViewController()
 		broadcastViewController.prepareForBroadcast(config: config)
 		broadcastViewController.modalPresentationStyle = .fullScreen
@@ -174,7 +194,16 @@ class ViewController: UIViewController {
 		UserDefaults.standard.set(streamKey, forKey: "laststreamKey")
 		
 		startButton.isSelected = true
-		let config = UZBroadcastConfig(cameraPosition: .back, videoResolution: videoResolution, videoBitrate: videoBitrate, videoFPS: videoFPS, audioBitrate: audioBitrate, audioSampleRate: audioSampleRate, adaptiveBitrate: true, autoRotate: true)
+		let config = UZBroadcastConfig(cameraPosition: .front,
+									   videoResolution: videoResolution,
+									   videoBitrate: videoBitrate,
+									   videoFPS: videoFPS,
+									   audioBitrate: audioBitrate,
+									   audioSampleRate: audioSampleRate,
+									   adaptiveBitrate: adaptiveBitrate,
+									   autoRotate: autoRotate,
+									   saveToLocal: saveToLocal)
+		
 		let broadcaster = UZScreenBroadcast()
 		broadcaster.prepareForBroadcast(config: config)
 		broadcaster.isCameraEnabled = false
@@ -202,6 +231,15 @@ class ViewController: UIViewController {
 		else if option.title == TableSectionType.audioSampleRate.rawValue {
 			audioSampleRate = UZAudioSampleRate.allCases[index]
 		}
+		else if option.title == TableSectionType.adaptiveBitrate.rawValue {
+			adaptiveBitrate = index == 0
+		}
+		else if option.title == TableSectionType.autoRotate.rawValue {
+			autoRotate = index == 0
+		}
+		else if option.title == TableSectionType.saveToLocal.rawValue {
+			saveToLocal = index == 0
+		}
 		
 		updateValues()
 	}
@@ -225,13 +263,8 @@ class ViewController: UIViewController {
 
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
 	
-	func numberOfSections(in tableView: UITableView) -> Int {
-		return sections.count
-	}
-	
-	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return sections[section].items.count
-	}
+	func numberOfSections(in tableView: UITableView) -> Int { sections.count }
+	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { sections[section].items.count }
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		return tableView.dequeueReusableCell(withIdentifier: "cell") ?? UITableViewCell(style: .subtitle, reuseIdentifier: "cell")
@@ -245,13 +278,8 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 		cell.detailTextLabel?.text = item.value
 	}
 	
-	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-		return 55
-	}
-	
-	func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-		return sections[section].title
-	}
+	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat { 55 }
+	func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? { sections[section].title }
 	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		tableView.deselectRow(at: indexPath, animated: true)
@@ -260,3 +288,8 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 	
 }
 
+extension Bool {
+	
+	func toString() -> String { self ? "On" : "Off" }
+	
+}

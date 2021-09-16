@@ -206,7 +206,7 @@ public class UZScreenBroadcast {
 		switch code {
 			case RTMPConnection.Code.connectSuccess.rawValue:
 				retryCount = 0
-				rtmpStream.publish(streamKey!)
+				rtmpStream.publish(streamKey!, type: config.saveToLocal == true ? .localRecord : .live)
 				
 			case RTMPConnection.Code.connectFailed.rawValue, RTMPConnection.Code.connectClosed.rawValue:
 				guard retryCount <= maxRetryCount else { return }

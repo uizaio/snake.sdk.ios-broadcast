@@ -170,10 +170,10 @@ public struct UZBroadcastConfig {
 	public var audioBitrate: UZAudioBitrate
 	public var audioSampleRate: UZAudioSampleRate
 	public var adaptiveBitrate: Bool
-	public var orientation: UIInterfaceOrientation?
-	public var autoRotate: Bool?
+	public var autoRotate: Bool
+	public var saveToLocal: Bool
 	
-	public init(cameraPosition: UZCameraPosition, videoResolution: UZVideoResolution, videoBitrate: UZVideoBitrate, videoFPS: UZVideoFPS, audioBitrate: UZAudioBitrate, audioSampleRate: UZAudioSampleRate, adaptiveBitrate: Bool, orientation: UIInterfaceOrientation? = nil, autoRotate: Bool? = nil) {
+	public init(cameraPosition: UZCameraPosition, videoResolution: UZVideoResolution, videoBitrate: UZVideoBitrate, videoFPS: UZVideoFPS, audioBitrate: UZAudioBitrate, audioSampleRate: UZAudioSampleRate, adaptiveBitrate: Bool = true, autoRotate: Bool = true, saveToLocal: Bool = false) {
 		self.cameraPosition = cameraPosition
 		self.videoResolution = videoResolution
 		self.videoBitrate = videoBitrate
@@ -181,7 +181,7 @@ public struct UZBroadcastConfig {
 		self.audioBitrate = audioBitrate
 		self.audioSampleRate = audioSampleRate
 		self.adaptiveBitrate = adaptiveBitrate
-		self.orientation = orientation
 		self.autoRotate = autoRotate
+		self.saveToLocal = saveToLocal
 	}
 }

@@ -10,6 +10,7 @@ import UIKit
 import NKButton
 import FrameLayoutKit
 import SwiftIcons
+import HaishinKit
 
 class MyBroadcastViewController: UZBroadcastViewController {
 	let closeButton = NKButton()
@@ -21,6 +22,7 @@ class MyBroadcastViewController: UZBroadcastViewController {
 	let exposureButton = NKButton()
 	let muteButton = NKButton()
 	let frameLayout = ZStackLayout()
+	let liveLabel = UILabel()
 	let statusLabel = UILabel()
 	
 	let beautyEffect = BeautyEffect()
@@ -28,6 +30,14 @@ class MyBroadcastViewController: UZBroadcastViewController {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		
+		liveLabel.text = "Live"
+		liveLabel.textColor = .white
+		liveLabel.textAlignment = .center
+		liveLabel.backgroundColor = .systemRed
+		liveLabel.font = .systemFont(ofSize: 14, weight: .medium)
+		liveLabel.layer.cornerRadius = 5
+		liveLabel.layer.masksToBounds = true
 		
 		statusLabel.alpha = 0.0
 		statusLabel.font = .systemFont(ofSize: 12, weight: .medium)
@@ -88,7 +98,7 @@ class MyBroadcastViewController: UZBroadcastViewController {
 			$0.backgroundColors[.selected] = .white
 			$0.borderSizes[.normal] = 1
 			$0.extendSize = CGSize(width: 8, height: 4)
-			$0.titleFonts[.normal] = .monospacedDigitSystemFont(ofSize: 10, weight: .medium)
+			$0.titleFonts[.normal] = .systemFont(ofSize: 14, weight: .medium)
 			$0.isRoundedButton = true
 			$0.showsTouchWhenHighlighted = true
 			view.addSubview($0)
@@ -96,12 +106,17 @@ class MyBroadcastViewController: UZBroadcastViewController {
 		
 		view.addSubview(closeButton)
 		view.addSubview(statusLabel)
+		view.addSubview(liveLabel)
 		view.addSubview(frameLayout)
 		
-		(frameLayout + statusLabel).with {
-			$0.alignment = (.bottom, .center)
-			$0.extendSize = CGSize(width: 8, height: 4)
-			$0.padding(top: 0, left: 0, bottom: 80, right: 0)
+		frameLayout + VStackLayout {
+			($0 + liveLabel)
+				.align(vertical: .center, horizontal: .center)
+				.extends(size: CGSize(width: 8, height: 4))
+			($0 + 0).flexible()
+			($0 + statusLabel)
+				.align(vertical: .bottom, horizontal: .center)
+				.extends(size: CGSize(width: 8, height: 4))
 		}
 		frameLayout + VStackLayout {
 			($0 + 0).flexible()
@@ -112,8 +127,7 @@ class MyBroadcastViewController: UZBroadcastViewController {
 			}
 		}
 		
-		frameLayout.spacing = 16
-		frameLayout.padding(top: 30, left: 16, bottom: 48, right: 16)
+		frameLayout.spacing(16).padding(top: view.extendSafeEdgeInsets.top + 16, left: 16, bottom: view.extendSafeEdgeInsets.bottom + 24, right: 16)
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -127,7 +141,16 @@ class MyBroadcastViewController: UZBroadcastViewController {
 		
 		let viewSize = view.bounds.size
 		let buttonSize = CGSize(width: 33, height: 33)
-		closeButton.frame = CGRect(x: viewSize.width - buttonSize.width - 15, y: 40, width: buttonSize.width, height: buttonSize.height)
+		closeButton.frame = CGRect(x: viewSize.width - buttonSize.width - 15, y: view.extendSafeEdgeInsets.top + 16, width: buttonSize.width, height: buttonSize.height)
+	}
+	
+	override func prepareForBroadcast(config: UZBroadcastConfig) -> RTMPStream {
+		let stream = super.prepareForBroadcast(config: config)
+		if config.saveToLocal {
+			rtmpStream.mixer.recorder.delegate = RecorderDelegate.sharedInstance
+		}
+		
+		return stream
 	}
 	
 	override func requestCameraAccess() -> Bool {
@@ -234,4 +257,28 @@ class MyBroadcastViewController: UZBroadcastViewController {
 	override var shouldAutorotate: Bool { true }
 	override var supportedInterfaceOrientations: UIInterfaceOrientationMask { .all }
 	
+}
+
+
+// MARK: - RecorderDelegate
+import Photos
+import AVFoundation
+import VideoToolbox
+
+final class RecorderDelegate: DefaultAVRecorderDelegate {
+	static let sharedInstance = RecorderDelegate()
+	
+	override func didFinishWriting(_ recorder: AVRecorder) {
+		guard let writer = recorder.writer else { return }
+		
+		PHPhotoLibrary.shared().performChanges({() -> Void in
+			PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: writer.outputURL)
+		}, completionHandler: { _, error -> Void in
+			do {
+				try FileManager.default.removeItem(at: writer.outputURL)
+			} catch {
+				print(error)
+			}
+		})
+	}
 }
