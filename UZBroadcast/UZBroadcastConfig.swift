@@ -51,7 +51,7 @@ public enum UZVideoResolution: CaseIterable {
 			case ._360: result = "SD 360p"
 			case ._480: result = "SD 480p"
 			case ._720: result = "HD 720"
-			case ._1080: result = "FullHD 1080"
+			case ._1080: result = "Full HD 1080"
 		}
 		
 		return result + " (\(Int(videoSize.width))x\(Int(videoSize.height)))"
@@ -59,24 +59,47 @@ public enum UZVideoResolution: CaseIterable {
 	
 }
 
-public enum UZVideoBitrate: UInt32, CaseIterable {
-	case _32Kbps = 32_000
-	case _64Kbps = 64_000
-	case _128Kbps = 128_000
-	case _256Kbps = 256_000
-	case _512Kbps = 512_000
-	case _640Kbps = 640_000
-	case _768Kbps = 768_000
-	case _896Kbps = 896_000
-	case _1024Kbps = 1_024_000
-	case _1500Kbps = 1_500_000
-	case _2000Kbps = 2_000_000
-	case _3000Kbps = 3_000_000
-	case _4000Kbps = 4_000_000
+public enum UZVideoBitrate: CaseIterable {
+	case _500Kbps
+	case _1000Kbps
+	case _1500Kbps
+	case _2000Kbps
+	case _3000Kbps
+	case _4000Kbps
+	case _5000Kbps
+	case _6000Kbps
+	case custom(UInt32)
+	
+	public func value() -> UInt32 {
+		switch self {
+			case ._500Kbps: return 500_000
+			case ._1000Kbps: return 1_000_000
+			case ._1500Kbps: return 1_500_000
+			case ._2000Kbps: return 2_000_000
+			case ._3000Kbps: return 3_000_000
+			case ._4000Kbps: return 4_000_000
+			case ._5000Kbps: return 5_000_000
+			case ._6000Kbps: return 6_000_000
+			case .custom(let value): return value
+		}
+	}
+	
+	public static var allCases: [UZVideoBitrate] {
+		[
+			_500Kbps,
+			_1000Kbps,
+			_1500Kbps,
+			_2000Kbps,
+			_3000Kbps,
+			_4000Kbps,
+			_5000Kbps,
+			_6000Kbps,
+		]
+	}
 	
 	/// Convert to readable string
 	public func toString() -> String {
-		return "\(self.rawValue/1000) Kbps"
+		return "\(self.value()/1000) Kbps"
 	}
 }
 
@@ -131,7 +154,7 @@ public enum UZCameraPosition {
 	case front
 	case back
 	
-	func asValue() -> AVCaptureDevice.Position {
+	func value() -> AVCaptureDevice.Position {
 		switch self {
 			case .front: return .front
 			case .back: return .back

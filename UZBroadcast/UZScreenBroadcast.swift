@@ -87,7 +87,7 @@ public class UZScreenBroadcast {
 	public fileprivate(set) var config: UZBroadcastConfig! {
 		didSet {
 			cameraPosition = config.cameraPosition
-			videoBitrate = config.videoBitrate.rawValue
+			videoBitrate = config.videoBitrate.value()
 			videoFPS = config.videoFPS.rawValue
 			audioBitrate = config.audioBitrate.rawValue
 			audioSampleRate = config.audioSampleRate.rawValue

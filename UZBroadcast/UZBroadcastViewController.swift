@@ -27,7 +27,7 @@ open class UZBroadcastViewController: UIViewController {
 			guard cameraPosition != oldValue else { return }
 			DispatchQueue.main.async {
 				self.rtmpStream.captureSettings[.isVideoMirrored] = self.cameraPosition == .front
-				self.rtmpStream.attachCamera(DeviceUtil.device(withPosition: self.cameraPosition.asValue())) { error in
+				self.rtmpStream.attachCamera(DeviceUtil.device(withPosition: self.cameraPosition.value())) { error in
 					print(error)
 				}
 			}
@@ -109,7 +109,7 @@ open class UZBroadcastViewController: UIViewController {
 	/// Current broadcast configuration
 	public fileprivate(set) var config: UZBroadcastConfig! {
 		didSet {
-			videoBitrate = config.videoBitrate.rawValue
+			videoBitrate = config.videoBitrate.value()
 			videoFPS = config.videoFPS.rawValue
 			audioBitrate = config.audioBitrate.rawValue
 			audioSampleRate = config.audioSampleRate.rawValue
@@ -140,7 +140,7 @@ open class UZBroadcastViewController: UIViewController {
 	// MARK: -
 	
 	@discardableResult
-	func requestAccessForVideo() -> Bool {
+	open func requestCameraAccess() -> Bool {
 		let status = AVCaptureDevice.authorizationStatus(for: AVMediaType.video)
 		switch status {
 			case AVAuthorizationStatus.notDetermined:
@@ -162,7 +162,7 @@ open class UZBroadcastViewController: UIViewController {
 	}
 	
 	@discardableResult
-	func requestAccessForAudio() -> Bool {
+	open func requestMicrophoneAccess() -> Bool {
 		let status = AVCaptureDevice.authorizationStatus(for: AVMediaType.audio)
 		switch status {
 			case AVAuthorizationStatus.notDetermined: AVCaptureDevice.requestAccess(for: AVMediaType.audio, completionHandler: { granted in
@@ -203,7 +203,7 @@ open class UZBroadcastViewController: UIViewController {
 		self.broadcastURL = broadcastURL
 		self.streamKey = streamKey
 		
-		if requestAccessForVideo() && requestAccessForAudio() {
+		if requestCameraAccess() && requestMicrophoneAccess() {
 			startStream()
 		}
 	}
@@ -212,7 +212,7 @@ open class UZBroadcastViewController: UIViewController {
 		rtmpStream.attachAudio(AVCaptureDevice.default(for: .audio)) { error in
 			print(error)
 		}
-		rtmpStream.attachCamera(DeviceUtil.device(withPosition: cameraPosition.asValue())) { error in
+		rtmpStream.attachCamera(DeviceUtil.device(withPosition: cameraPosition.value())) { error in
 			print(error)
 		}
 //		rtmpStream.addObserver(self, forKeyPath: "currentFPS", options: .new, context: nil)
@@ -275,8 +275,8 @@ open class UZBroadcastViewController: UIViewController {
 	open override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
 		
-		requestAccessForVideo()
-		requestAccessForAudio()
+		if requestCameraAccess() == false { print("Camera permission is not granted. Please turn it on in Settings. Implement your own permission check to handle this case.") }
+		if requestMicrophoneAccess() == false { print("Microphone permission is not granted. Please turn it on in Settings. Implement your own permission check to handle this case.") }
 	}
 	
 	open override func viewDidLayoutSubviews() {

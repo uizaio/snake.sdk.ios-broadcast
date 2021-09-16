@@ -13,7 +13,7 @@ class SampleHandler: RPBroadcastSampleHandler {
 	let broadcaster = UZScreenBroadcast()
 	
 	var videoResolution: UZVideoResolution = ._720
-	var videoBitrate: UZVideoBitrate = ._128Kbps
+	var videoBitrate: UZVideoBitrate = ._4000Kbps
 	var videoFPS: UZVideoFPS = ._30fps
 	
 	var audioBitrate: UZAudioBitrate = ._128Kbps

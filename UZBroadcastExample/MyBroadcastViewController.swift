@@ -130,6 +130,22 @@ class MyBroadcastViewController: UZBroadcastViewController {
 		closeButton.frame = CGRect(x: viewSize.width - buttonSize.width - 15, y: 40, width: buttonSize.width, height: buttonSize.height)
 	}
 	
+	override func requestCameraAccess() -> Bool {
+		let granted = super.requestCameraAccess()
+		if !granted {
+			// show camera permission request dialog here
+		}
+		return granted
+	}
+	
+	override func requestMicrophoneAccess() -> Bool {
+		let granted = super.requestCameraAccess()
+		if !granted {
+			// show microphone permission request dialog here
+		}
+		return granted
+	}
+	
 	func showStatus(_ string: String) {
 		statusLabel.text = string
 		view.setNeedsLayout()
