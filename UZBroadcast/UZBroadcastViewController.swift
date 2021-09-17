@@ -232,7 +232,9 @@ open class UZBroadcastViewController: UIViewController, RTMPStreamDelegate {
 	private func openConnection() {
 		guard broadcastURL != nil, streamKey != nil else { return }
 		isBroadcasting = true
-		UIApplication.shared.isIdleTimerDisabled = true
+		DispatchQueue.main.async {
+			UIApplication.shared.isIdleTimerDisabled = true
+		}
 		
 		rtmpConnection.addEventListener(.rtmpStatus, selector: #selector(rtmpStatusHandler), observer: self)
 		rtmpConnection.addEventListener(.ioError, selector: #selector(rtmpErrorHandler), observer: self)
@@ -251,7 +253,9 @@ open class UZBroadcastViewController: UIViewController, RTMPStreamDelegate {
 	open func stopBroadcast() {
 		closeConnection()
 		isBroadcasting = false
-		UIApplication.shared.isIdleTimerDisabled = false
+		DispatchQueue.main.async {
+			UIApplication.shared.isIdleTimerDisabled = false
+		}
 	}
 	
 	
@@ -281,8 +285,8 @@ open class UZBroadcastViewController: UIViewController, RTMPStreamDelegate {
 	open override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
 		
-		if requestCameraAccess() == false { print("Camera permission is not granted. Please turn it on in Settings. Implement your own permission check to handle this case.") }
-		if requestMicrophoneAccess() == false { print("Microphone permission is not granted. Please turn it on in Settings. Implement your own permission check to handle this case.") }
+		if requestCameraAccess() == false { print("[UZBroadcaster] Camera permission is not granted. Please turn it on in Settings. Implement your own permission check to handle this case.") }
+		if requestMicrophoneAccess() == false { print("[UZBroadcaster] Microphone permission is not granted. Please turn it on in Settings. Implement your own permission check to handle this case.") }
 	}
 	
 	open override func viewDidLayoutSubviews() {
