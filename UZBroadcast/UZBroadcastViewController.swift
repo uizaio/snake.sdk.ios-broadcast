@@ -192,7 +192,7 @@ open class UZBroadcastViewController: UIViewController, RTMPStreamDelegate {
 	- parameter config: Broadcast configuration
 	*/
 	@discardableResult
-	public func prepareForBroadcast(config: UZBroadcastConfig) -> RTMPStream {
+	open func prepareForBroadcast(config: UZBroadcastConfig) -> RTMPStream {
 		self.config = config
 		return rtmpStream
 	}
@@ -202,7 +202,7 @@ open class UZBroadcastViewController: UIViewController, RTMPStreamDelegate {
 	- parameter broadcastURL: `URL` of broadcast
 	- parameter streamKey: Stream Key
 	*/
-	public func startBroadcast(broadcastURL: URL, streamKey: String) {
+	open func startBroadcast(broadcastURL: URL, streamKey: String) {
 		guard isBroadcasting == false else { return }
 		
 		self.broadcastURL = broadcastURL
@@ -248,7 +248,7 @@ open class UZBroadcastViewController: UIViewController, RTMPStreamDelegate {
 	/**
 	Stop broadcasting
 	*/
-	public func stopBroadcast() {
+	open func stopBroadcast() {
 		closeConnection()
 		isBroadcasting = false
 		UIApplication.shared.isIdleTimerDisabled = false
@@ -296,7 +296,7 @@ open class UZBroadcastViewController: UIViewController, RTMPStreamDelegate {
 	open override var preferredStatusBarStyle: UIStatusBarStyle { .lightContent }
 	
 	open override var shouldAutorotate: Bool {
-		return config.autoRotate ?? (UIDevice.current.userInterfaceIdiom == .pad)
+		return config.autoRotate
 	}
 	
 	open override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
@@ -378,7 +378,7 @@ open class UZBroadcastViewController: UIViewController, RTMPStreamDelegate {
 	
 	// MARK: - RTMPStreamDelegate
 	
-	public func rtmpStream(_ stream: RTMPStream, didPublishInsufficientBW connection: RTMPConnection) {
+	open func rtmpStream(_ stream: RTMPStream, didPublishInsufficientBW connection: RTMPConnection) {
 		guard config.adaptiveBitrate, let currentBitrate = rtmpStream.videoSettings[.bitrate] as? UInt32 else { return }
 		let value = max(minVideoBitrate ?? currentBitrate, currentBitrate / 2)
 		guard value != currentBitrate else { return }
@@ -387,7 +387,7 @@ open class UZBroadcastViewController: UIViewController, RTMPStreamDelegate {
 		print("bitRate decreased: \(value)kps")
 	}
 	
-	public func rtmpStream(_ stream: RTMPStream, didPublishSufficientBW connection: RTMPConnection) {
+	open func rtmpStream(_ stream: RTMPStream, didPublishSufficientBW connection: RTMPConnection) {
 		guard config.adaptiveBitrate, let currentBitrate = rtmpStream.videoSettings[.bitrate] as? UInt32 else { return }
 		let value = min(videoBitrate ?? currentBitrate, currentBitrate * 2)
 		guard value != currentBitrate else { return }
@@ -396,7 +396,7 @@ open class UZBroadcastViewController: UIViewController, RTMPStreamDelegate {
 		print("bitRate increased: \(value)kps")
 	}
 	
-	public func rtmpStreamDidClear(_ stream: RTMPStream) {
+	open func rtmpStreamDidClear(_ stream: RTMPStream) {
 		
 	}
 	
