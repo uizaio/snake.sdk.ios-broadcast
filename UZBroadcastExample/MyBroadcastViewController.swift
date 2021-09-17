@@ -271,24 +271,26 @@ final class RecorderDelegate: DefaultAVRecorderDelegate {
 	override func didFinishWriting(_ recorder: AVRecorder) {
 		guard let writer = recorder.writer else { return }
 		
-		PHPhotoLibrary.shared().performChanges({() -> Void in
-			PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: writer.outputURL)
-		}, completionHandler: { _, error -> Void in
-			DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-				if let error = error {
-					self.showAlert(message: "Unable to save video: \(error.localizedDescription)")
+		DispatchQueue.main.async {
+			PHPhotoLibrary.shared().performChanges {
+				PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: writer.outputURL)
+			} completionHandler: { success, error in
+				DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+					if let error = error {
+						self.showAlert(message: "Unable to save video: \(error.localizedDescription)")
+					}
+					else {
+						self.showAlert(message: "Video successfully saved to Photos")
+					}
 				}
-				else {
-					self.showAlert(message: "Video successfully saved to Photos")
+				
+				do {
+					try FileManager.default.removeItem(at: writer.outputURL)
+				} catch {
+					print(error)
 				}
 			}
-			
-			do {
-				try FileManager.default.removeItem(at: writer.outputURL)
-			} catch {
-				print(error)
-			}
-		})
+		}
 	}
 	
 	func showAlert(message: String) {
