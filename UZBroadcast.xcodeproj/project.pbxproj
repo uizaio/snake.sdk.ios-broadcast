@@ -24,6 +24,10 @@
 		63A995C1243488930042D733 /* UZBroadcastConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63402F44242C665A007CE911 /* UZBroadcastConfig.swift */; };
 		63A995C2243488930042D733 /* UZScreenBroadcast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FD93B72425D88E001B7A48 /* UZScreenBroadcast.swift */; };
 		63A995C3243488930042D733 /* UZBroadcastViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FD92D7241D16BC001B7A48 /* UZBroadcastViewController.swift */; };
+		63E82A6C2717172900954198 /* UZScreenBroadcast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FD93B72425D88E001B7A48 /* UZScreenBroadcast.swift */; };
+		63E82A6D2717172900954198 /* UZBroadcastConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63402F44242C665A007CE911 /* UZBroadcastConfig.swift */; };
+		63E82A6E2717172900954198 /* UZScreenBroadcast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FD93B72425D88E001B7A48 /* UZScreenBroadcast.swift */; };
+		63E82A6F2717172900954198 /* UZBroadcastConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63402F44242C665A007CE911 /* UZBroadcastConfig.swift */; };
 		63FD92D0241D1385001B7A48 /* UZBroadcast.h in Headers */ = {isa = PBXBuildFile; fileRef = 63FD92CE241D1385001B7A48 /* UZBroadcast.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		63FD92D9241D16BC001B7A48 /* UZBroadcastViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FD92D7241D16BC001B7A48 /* UZBroadcastViewController.swift */; };
 		63FD93182420CE0F001B7A48 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FD93172420CE0F001B7A48 /* AppDelegate.swift */; };
@@ -533,6 +537,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63E82A6D2717172900954198 /* UZBroadcastConfig.swift in Sources */,
+				63E82A6C2717172900954198 /* UZScreenBroadcast.swift in Sources */,
 				63744BD026EBA7C100F81B82 /* SampleHandler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -541,6 +547,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63E82A6F2717172900954198 /* UZBroadcastConfig.swift in Sources */,
+				63E82A6E2717172900954198 /* UZScreenBroadcast.swift in Sources */,
 				63744BDC26EBA7C200F81B82 /* BroadcastSetupViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -613,7 +621,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.uiza.UZBroadcast.UZBroadcastExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
+				SKIP_INSTALL = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -635,7 +643,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.uiza.UZBroadcast.UZBroadcastExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
+				SKIP_INSTALL = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -657,7 +665,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.uiza.UZBroadcast.UZBroadcastExtensionSetupUI;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
+				SKIP_INSTALL = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -679,7 +687,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.uiza.UZBroadcast.UZBroadcastExtensionSetupUI;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
+				SKIP_INSTALL = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -827,7 +835,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.uiza.UZBroadcast;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = NO;
+				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
@@ -857,7 +865,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.uiza.UZBroadcast;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = NO;
+				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -881,6 +889,7 @@
 				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.uiza.UZBroadcast;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -903,6 +912,7 @@
 				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.uiza.UZBroadcast;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

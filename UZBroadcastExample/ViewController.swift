@@ -8,7 +8,7 @@
 
 import UIKit
 import AVFoundation
-import UZBroadcast
+//import UZBroadcast
 
 struct TableItem {
 	var title: String
@@ -32,6 +32,7 @@ enum TableSectionType: String {
 	case saveToLocal = "Save to local"
 }
 
+@available(iOS 13.0, *)
 class ViewController: UIViewController {
 	let tableView = UITableView(frame: .zero, style: .grouped)
 	let startButton = UIButton(type: .system)
@@ -51,6 +52,8 @@ class ViewController: UIViewController {
 	var adaptiveBitrate = true
 	var saveToLocal = false
 	var autoRotate = true
+	
+	var broadcaster: UZScreenBroadcast?
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -109,8 +112,7 @@ class ViewController: UIViewController {
 	@objc func onStart() {
 		if #available(iOS 13.0, *) {
 			if startButton.isSelected {
-				stopRotating()
-				startButton.isSelected = false
+				stopScreenBroadcasting()
 				return
 			}
 		}
@@ -188,6 +190,11 @@ class ViewController: UIViewController {
 	
 	@available(iOS 13.0, *)
 	func startScreenBroadcasting(url: URL, streamKey: String) {
+		guard broadcaster == nil else {
+			stopScreenBroadcasting()
+			return
+		}
+		
 		startRotating()
 		
 		UserDefaults.standard.set(url.absoluteString, forKey: "lastUrl")
@@ -204,13 +211,20 @@ class ViewController: UIViewController {
 									   autoRotate: autoRotate,
 									   saveToLocal: saveToLocal)
 		
-		let broadcaster = UZScreenBroadcast()
-		broadcaster.prepareForBroadcast(config: config)
-		broadcaster.isCameraEnabled = false
-		broadcaster.isMicrophoneEnabled = false
-		broadcaster.startBroadcast(broadcastURL: url, streamKey: streamKey) { error in
+		broadcaster = UZScreenBroadcast()
+		broadcaster!.prepareForBroadcast(config: config)
+		broadcaster!.isCameraEnabled = false
+		broadcaster!.isMicrophoneEnabled = false
+		broadcaster!.startBroadcast(broadcastURL: url, streamKey: streamKey) { error in
 			print("Error: \(String(describing: error))")
 		}
+	}
+	
+	func stopScreenBroadcasting() {
+		startButton.isSelected = false
+		stopRotating()
+		broadcaster?.stopBroadcast(handler: nil)
+		broadcaster = nil
 	}
 	
 	func switchValue(index: Int, for option: TableItem) {
@@ -261,6 +275,7 @@ class ViewController: UIViewController {
 	
 }
 
+@available(iOS 13.0, *)
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
 	
 	func numberOfSections(in tableView: UITableView) -> Int { sections.count }

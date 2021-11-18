@@ -22,7 +22,7 @@ class MyBroadcastViewController: UZBroadcastViewController {
 	let exposureButton = NKButton()
 	let muteButton = NKButton()
 	let frameLayout = ZStackLayout()
-	let liveLabel = UILabel()
+	let liveLabel = LiveBadgeView()
 	let statusLabel = UILabel()
 	
 	let beautyEffect = BeautyEffect()
@@ -30,14 +30,6 @@ class MyBroadcastViewController: UZBroadcastViewController {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		
-		liveLabel.text = "Live"
-		liveLabel.textColor = .white
-		liveLabel.textAlignment = .center
-		liveLabel.backgroundColor = .systemRed
-		liveLabel.font = .systemFont(ofSize: 14, weight: .medium)
-		liveLabel.layer.cornerRadius = 5
-		liveLabel.layer.masksToBounds = true
 		
 		statusLabel.alpha = 0.0
 		statusLabel.font = .systemFont(ofSize: 12, weight: .medium)
@@ -110,9 +102,7 @@ class MyBroadcastViewController: UZBroadcastViewController {
 		view.addSubview(frameLayout)
 		
 		frameLayout + VStackLayout {
-			($0 + liveLabel)
-				.align(vertical: .center, horizontal: .center)
-				.extends(size: CGSize(width: 8, height: 4))
+			($0 + liveLabel).align(vertical: .center, horizontal: .center)
 			($0 + 0).flexible()
 			($0 + statusLabel)
 				.align(vertical: .bottom, horizontal: .center)
@@ -144,6 +134,7 @@ class MyBroadcastViewController: UZBroadcastViewController {
 		closeButton.frame = CGRect(x: viewSize.width - buttonSize.width - 15, y: view.extendSafeEdgeInsets.top + 16, width: buttonSize.width, height: buttonSize.height)
 	}
 	
+	@discardableResult
 	override func prepareForBroadcast(config: UZBroadcastConfig) -> RTMPStream {
 		let stream = super.prepareForBroadcast(config: config)
 		if config.saveToLocal {
@@ -151,6 +142,16 @@ class MyBroadcastViewController: UZBroadcastViewController {
 		}
 		
 		return stream
+	}
+	
+	override func startBroadcast(broadcastURL: URL, streamKey: String) {
+		super.startBroadcast(broadcastURL: broadcastURL, streamKey: streamKey)
+		liveLabel.startBlinking()
+	}
+	
+	override func stopBroadcast() {
+		super.stopBroadcast()
+		liveLabel.stopBlinking()
 	}
 	
 	override func requestCameraAccess() -> Bool {
@@ -297,6 +298,53 @@ final class RecorderDelegate: DefaultAVRecorderDelegate {
 		let alertControl = UIAlertController(title: nil, message: message, preferredStyle: .alert)
 		alertControl.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
 		UIViewController.topPresented()?.present(alertControl, animated: true, completion: nil)
+	}
+	
+}
+
+class LiveBadgeView: FLView<HStackLayout> {
+	let liveLabel = UILabel()
+	let dotView = UIView()
+	
+	init() {
+		super.init(frame: .zero)
+		
+		layer.cornerRadius = 5
+		layer.masksToBounds = true
+		backgroundColor = .systemRed
+		
+		liveLabel.text = "Live"
+		liveLabel.textColor = .white
+		liveLabel.textAlignment = .center
+		liveLabel.font = .systemFont(ofSize: 14, weight: .medium)
+		
+		dotView.backgroundColor = .white
+		dotView.layer.masksToBounds = true
+		dotView.layer.cornerRadius = 4
+		
+		addSubview(liveLabel)
+		addSubview(dotView)
+		addSubview(frameLayout)
+		
+		(frameLayout + dotView).fixedContentSize(CGSize(width: 8, height: 8)).align(vertical: .center, horizontal: .center)
+		(frameLayout + liveLabel).align(vertical: .center, horizontal: .center)
+		frameLayout.padding(top: 4, left: 8, bottom: 4, right: 8).spacing(8)
+	}
+	
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+	
+	func startBlinking() {
+		DispatchQueue.main.async {
+			self.dotView.blink()
+		}
+	}
+	
+	func stopBlinking() {
+		DispatchQueue.main.async {
+			self.dotView.layer.removeAllAnimations()
+		}
 	}
 	
 }

@@ -6,7 +6,7 @@
         "repositoryURL": "https://github.com/kennic/FrameLayoutKit",
         "state": {
           "branch": "master",
-          "revision": "aad99819786662376d750da4767e90d59c788cf1",
+          "revision": "44ec1e68c2a707399c28b0031f2cdbb07b7db64d",
           "version": null
         }
       },
@@ -15,7 +15,7 @@
         "repositoryURL": "https://github.com/kennic/NKButton",
         "state": {
           "branch": "master",
-          "revision": "aed07c2e504a38d9a19780c527d5f49ba0408770",
+          "revision": "1c09e11c4e88a76816e12756380a79d9a7182949",
           "version": null
         }
       },

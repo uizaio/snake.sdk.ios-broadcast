@@ -7,7 +7,7 @@
 //
 
 import ReplayKit
-import UZBroadcast
+//import UZBroadcast
 
 class SampleHandler: RPBroadcastSampleHandler {
 	let broadcaster = UZScreenBroadcast()

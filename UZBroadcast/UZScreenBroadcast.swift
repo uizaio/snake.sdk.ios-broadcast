@@ -188,8 +188,8 @@ public class UZScreenBroadcast {
 	- parameter handler: Block called when completed, returns `Error` if occured
 	*/
 	public func stopBroadcast(handler: ((Error?) -> Void)? = nil) {
-		screenRecorder.stopCapture(handler: handler)
 		closeConnection()
+		screenRecorder.stopCapture(handler: handler)
 		isBroadcasting = false
 	}
 	

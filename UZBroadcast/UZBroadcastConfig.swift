@@ -30,19 +30,10 @@ public enum UZVideoResolution: CaseIterable {
 		switch self {
 			case ._360: return .cif352x288
 			case ._480: return .vga640x480
-			case ._720: return .hd1280x720
+			case ._720: return .hd1920x1080 //hd1280x720
 			case ._1080: return .hd1920x1080
 		}
 	}
-	//
-	//	internal var videoQuality: LFLiveVideoQuality {
-	//		switch self {
-	//		case ._360: return .SD_360
-	//		case ._480: return .SD_480
-	//		case ._720: return .HD_720
-	//		case ._1080: return .fullHD_1080
-	//		}
-	//	}
 	
 	/// Convert to readable string
 	public func toString() -> String {

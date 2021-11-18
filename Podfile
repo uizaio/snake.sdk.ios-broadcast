@@ -13,24 +13,24 @@ target 'UZBroadcastExample' do
 	platform :ios, '10.0'
 	use_frameworks!
 	
-	pod 'UZBroadcast', :path => './'
+#	pod 'UZBroadcast', :path => './'
 	pod 'SwiftIcons'
-	
+	pod 'HaishinKit'
 end
 
 target 'UZBroadcastExtension' do
 	platform :ios, '10.0'
 	use_frameworks!
-	
-	pod 'UZBroadcast', :path => './'
+	pod 'HaishinKit'
+#	pod 'UZBroadcast', :path => './'
 	
 end
 
 target 'UZBroadcastExtensionSetupUI' do
 	platform :ios, '10.0'
 	use_frameworks!
-	
-	pod 'UZBroadcast', :path => './'
+	pod 'HaishinKit'
+#	pod 'UZBroadcast', :path => './'
 	
 end
 
