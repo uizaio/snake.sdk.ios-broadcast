@@ -6,6 +6,7 @@ target 'UZBroadcast' do
   use_frameworks!
 
   pod 'HaishinKit'
+	pod 'GPUImage'
 
 end
 
@@ -16,12 +17,14 @@ target 'UZBroadcastExample' do
 #	pod 'UZBroadcast', :path => './'
 	pod 'SwiftIcons'
 	pod 'HaishinKit'
+	pod 'GPUImage'
 end
 
 target 'UZBroadcastExtension' do
 	platform :ios, '10.0'
 	use_frameworks!
 	pod 'HaishinKit'
+	pod 'GPUImage'
 #	pod 'UZBroadcast', :path => './'
 	
 end
@@ -30,6 +33,7 @@ target 'UZBroadcastExtensionSetupUI' do
 	platform :ios, '10.0'
 	use_frameworks!
 	pod 'HaishinKit'
+	pod 'GPUImage'
 #	pod 'UZBroadcast', :path => './'
 	
 end

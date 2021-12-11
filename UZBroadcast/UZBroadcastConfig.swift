@@ -153,6 +153,18 @@ public enum UZCameraPosition {
 	}
 }
 
+extension AVCaptureDevice.Position {
+	
+	func asUZCamerraPosition() -> UZCameraPosition {
+		switch self {
+			case .front: return .front
+			case .back: return .back
+			default: return .front
+		}
+	}
+	
+}
+
 public struct UZBroadcastConfig {
 	public var cameraPosition: UZCameraPosition
 	public var videoResolution: UZVideoResolution

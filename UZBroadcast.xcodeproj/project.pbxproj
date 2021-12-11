@@ -24,6 +24,16 @@
 		63A995C1243488930042D733 /* UZBroadcastConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63402F44242C665A007CE911 /* UZBroadcastConfig.swift */; };
 		63A995C2243488930042D733 /* UZScreenBroadcast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FD93B72425D88E001B7A48 /* UZScreenBroadcast.swift */; };
 		63A995C3243488930042D733 /* UZBroadcastViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FD92D7241D16BC001B7A48 /* UZBroadcastViewController.swift */; };
+		63D7727A2763A736006FB42F /* NetStream+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D772752763A736006FB42F /* NetStream+Extension.swift */; };
+		63D7727B2763A736006FB42F /* NetStream+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D772752763A736006FB42F /* NetStream+Extension.swift */; };
+		63D7727C2763A736006FB42F /* GPUImageBeautyFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = 63D772762763A736006FB42F /* GPUImageBeautyFilter.h */; };
+		63D7727E2763A736006FB42F /* GPUImageBeautyFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D772782763A736006FB42F /* GPUImageBeautyFilter.m */; };
+		63D7727F2763A736006FB42F /* GPUImageBeautyFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D772782763A736006FB42F /* GPUImageBeautyFilter.m */; };
+		63D772802763A736006FB42F /* GPUImageRawOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D772792763A736006FB42F /* GPUImageRawOutput.swift */; };
+		63D772812763A736006FB42F /* GPUImageRawOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D772792763A736006FB42F /* GPUImageRawOutput.swift */; };
+		63D772832764EAA5006FB42F /* UZGPUBroadcastViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D772822764EAA5006FB42F /* UZGPUBroadcastViewController.swift */; };
+		63D772842764F87C006FB42F /* UZGPUBroadcastViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D772822764EAA5006FB42F /* UZGPUBroadcastViewController.swift */; };
+		63D772882764FBEA006FB42F /* MyGPUBroadcastViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D772872764FBEA006FB42F /* MyGPUBroadcastViewController.swift */; };
 		63E82A6C2717172900954198 /* UZScreenBroadcast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FD93B72425D88E001B7A48 /* UZScreenBroadcast.swift */; };
 		63E82A6D2717172900954198 /* UZBroadcastConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63402F44242C665A007CE911 /* UZBroadcastConfig.swift */; };
 		63E82A6E2717172900954198 /* UZScreenBroadcast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FD93B72425D88E001B7A48 /* UZScreenBroadcast.swift */; };
@@ -91,6 +101,13 @@
 		63744BD826EBA7C200F81B82 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		63744BDB26EBA7C200F81B82 /* BroadcastSetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BroadcastSetupViewController.swift; sourceTree = "<group>"; };
 		63744BDD26EBA7C200F81B82 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		63D772742763A735006FB42F /* UZBroadcastExample-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UZBroadcastExample-Bridging-Header.h"; sourceTree = "<group>"; };
+		63D772752763A736006FB42F /* NetStream+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NetStream+Extension.swift"; sourceTree = "<group>"; };
+		63D772762763A736006FB42F /* GPUImageBeautyFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUImageBeautyFilter.h; sourceTree = "<group>"; };
+		63D772782763A736006FB42F /* GPUImageBeautyFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUImageBeautyFilter.m; sourceTree = "<group>"; };
+		63D772792763A736006FB42F /* GPUImageRawOutput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GPUImageRawOutput.swift; sourceTree = "<group>"; };
+		63D772822764EAA5006FB42F /* UZGPUBroadcastViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UZGPUBroadcastViewController.swift; sourceTree = "<group>"; };
+		63D772872764FBEA006FB42F /* MyGPUBroadcastViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGPUBroadcastViewController.swift; sourceTree = "<group>"; };
 		63FD92CB241D1385001B7A48 /* UZBroadcast.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = UZBroadcast.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		63FD92CE241D1385001B7A48 /* UZBroadcast.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UZBroadcast.h; sourceTree = "<group>"; };
 		63FD92D7241D16BC001B7A48 /* UZBroadcastViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UZBroadcastViewController.swift; sourceTree = "<group>"; };
@@ -223,10 +240,16 @@
 		63FD92CD241D1385001B7A48 /* UZBroadcast */ = {
 			isa = PBXGroup;
 			children = (
+				63D772762763A736006FB42F /* GPUImageBeautyFilter.h */,
+				63D772782763A736006FB42F /* GPUImageBeautyFilter.m */,
+				63D772792763A736006FB42F /* GPUImageRawOutput.swift */,
+				63D772752763A736006FB42F /* NetStream+Extension.swift */,
 				63402F44242C665A007CE911 /* UZBroadcastConfig.swift */,
 				63FD93B72425D88E001B7A48 /* UZScreenBroadcast.swift */,
 				63FD92D7241D16BC001B7A48 /* UZBroadcastViewController.swift */,
+				63D772822764EAA5006FB42F /* UZGPUBroadcastViewController.swift */,
 				63FD92CE241D1385001B7A48 /* UZBroadcast.h */,
+				63D772742763A735006FB42F /* UZBroadcastExample-Bridging-Header.h */,
 			);
 			path = UZBroadcast;
 			sourceTree = "<group>";
@@ -237,6 +260,7 @@
 				63FD93172420CE0F001B7A48 /* AppDelegate.swift */,
 				63744BAE26E7C96C00F81B82 /* VideoEffects.swift */,
 				63FD9371242370DA001B7A48 /* MyBroadcastViewController.swift */,
+				63D772872764FBEA006FB42F /* MyGPUBroadcastViewController.swift */,
 				635036C426F3587400AF3E2F /* Extensions.swift */,
 				63FD931B2420CE0F001B7A48 /* ViewController.swift */,
 				63FD93202420CE11001B7A48 /* Assets.xcassets */,
@@ -254,6 +278,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				63FD92D0241D1385001B7A48 /* UZBroadcast.h in Headers */,
+				63D7727C2763A736006FB42F /* GPUImageBeautyFilter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -359,10 +384,11 @@
 					};
 					63FD92CA241D1385001B7A48 = {
 						CreatedOnToolsVersion = 11.3.1;
-						LastSwiftMigration = 1130;
+						LastSwiftMigration = 1310;
 					};
 					63FD93142420CE0F001B7A48 = {
 						CreatedOnToolsVersion = 11.3.1;
+						LastSwiftMigration = 1310;
 					};
 				};
 			};
@@ -558,8 +584,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				63402F45242C665A007CE911 /* UZBroadcastConfig.swift in Sources */,
+				63D772832764EAA5006FB42F /* UZGPUBroadcastViewController.swift in Sources */,
+				63D7727E2763A736006FB42F /* GPUImageBeautyFilter.m in Sources */,
 				63FD93B82425D88E001B7A48 /* UZScreenBroadcast.swift in Sources */,
 				63FD92D9241D16BC001B7A48 /* UZBroadcastViewController.swift in Sources */,
+				63D7727A2763A736006FB42F /* NetStream+Extension.swift in Sources */,
+				63D772802763A736006FB42F /* GPUImageRawOutput.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -568,13 +598,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				63744BAF26E7C96C00F81B82 /* VideoEffects.swift in Sources */,
+				63D772882764FBEA006FB42F /* MyGPUBroadcastViewController.swift in Sources */,
 				63FD931C2420CE0F001B7A48 /* ViewController.swift in Sources */,
+				63D772842764F87C006FB42F /* UZGPUBroadcastViewController.swift in Sources */,
 				63FD93182420CE0F001B7A48 /* AppDelegate.swift in Sources */,
+				63D7727B2763A736006FB42F /* NetStream+Extension.swift in Sources */,
 				63A995C1243488930042D733 /* UZBroadcastConfig.swift in Sources */,
 				63A995C2243488930042D733 /* UZScreenBroadcast.swift in Sources */,
+				63D7727F2763A736006FB42F /* GPUImageBeautyFilter.m in Sources */,
 				63FD9372242370DA001B7A48 /* MyBroadcastViewController.swift in Sources */,
 				635036C526F3587500AF3E2F /* Extensions.swift in Sources */,
 				63A995C3243488930042D733 /* UZBroadcastViewController.swift in Sources */,
+				63D772812763A736006FB42F /* GPUImageRawOutput.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -878,6 +913,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 385YL4KG69;
 				INFOPLIST_FILE = UZBroadcastExample/Info.plist;
@@ -890,6 +926,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.uiza.UZBroadcast;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "UZBroadcast/UZBroadcastExample-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -901,6 +939,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 385YL4KG69;
 				INFOPLIST_FILE = UZBroadcastExample/Info.plist;
@@ -913,6 +952,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.uiza.UZBroadcast;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "UZBroadcast/UZBroadcastExample-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

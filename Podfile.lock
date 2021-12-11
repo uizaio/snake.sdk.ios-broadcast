@@ -1,24 +1,28 @@
 PODS:
+  - GPUImage (0.1.7)
   - HaishinKit (1.1.8):
     - Logboard (~> 2.2.2)
   - Logboard (2.2.2)
   - SwiftIcons (2.2.0)
 
 DEPENDENCIES:
+  - GPUImage
   - HaishinKit
   - SwiftIcons
 
 SPEC REPOS:
   trunk:
+    - GPUImage
     - HaishinKit
     - Logboard
     - SwiftIcons
 
 SPEC CHECKSUMS:
+  GPUImage: 733a5f0fab92df9de1c37ba9df520a833ccb406d
   HaishinKit: c7995204dbd60e89d8545535c17e0e3f04247ec6
   Logboard: 0ab6bbd984ed032b3f0b615cef06779a73445c80
   SwiftIcons: e7eb9bf2b475d6bdd8b37c5bdedc6d120aab0829
 
-PODFILE CHECKSUM: 80f80bd49c99286e3a1776e789d015ac721cd778
+PODFILE CHECKSUM: d593a8903f47d2c1dd9c94919b9cff61b2c53f97
 
 COCOAPODS: 1.11.2
