@@ -37,7 +37,7 @@ present(broadcaster, animated: true, completion: nil)
 
 ## Livestream with BeautyFilter
 
-BeautyFilter uses GPUImage, so we need to use another class to approach:
+BeautyFilter uses GPUImage, so we need to use another approach:
 
 ```swift
 let broadcaster = UZGPUBroadcastViewController()
