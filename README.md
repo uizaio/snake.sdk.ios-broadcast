@@ -35,6 +35,23 @@ broadcaster.startBroadcast(broadcastURL: BROADCAST_URL, streamKey: STREAM_KEY)
 present(broadcaster, animated: true, completion: nil)
 ```
 
+## Livestream with BeautyFilter
+
+BeautyFilter uses GPUImage, so we need to use another class to approach:
+
+```swift
+let broadcaster = UZGPUBroadcastViewController()
+broadcaster.filter.beautyLevel = 0.5 // 0.0 ... 1.0
+broadcaster.filter.brightLevel = 0.5 // 0.0 ... 1.0
+broadcaster.filter.toneLevel = 0.5 // 0.0 ... 1.0
+
+let config = UZBroadcastConfig(cameraPosition: .front, videoResolution: ._720, videoBitrate: ._3000, videoFPS: ._30, audioBitrate: ._128Kbps, audioSampleRate: ._44_1khz, adaptiveBitrate: true)
+broadcaster.prepareForBroadcast(config: config)
+//...
+broadcaster.startBroadcast(broadcastURL: BROADCAST_URL, streamKey: STREAM_KEY)
+present(broadcaster, animated: true, completion: nil)
+```
+
 ## Screen broadcast
 
 ```swift
