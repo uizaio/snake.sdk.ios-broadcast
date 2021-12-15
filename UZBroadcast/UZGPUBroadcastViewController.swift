@@ -199,6 +199,7 @@ open class UZGPUBroadcastViewController: UIViewController {
 		
 		camera = GPUImageVideoCamera(sessionPreset: self.config.videoResolution.sessionPreset.rawValue, cameraPosition: config.cameraPosition.value())
 		camera?.horizontallyMirrorFrontFacingCamera = true
+		camera?.outputImageOrientation = .portrait
 		camera?.addTarget(filter)
 		rtmpStream.attachGPUImageVideoCamera(camera!)
 		
@@ -206,6 +207,10 @@ open class UZGPUBroadcastViewController: UIViewController {
 		filter.addTarget(rtmpStream.rawDataOutput)
 		
 //		rtmpStream.addObserver(self, forKeyPath: "currentFPS", options: .new, context: nil)
+		
+		DispatchQueue.main.async {
+			self.camera?.startCapture()
+		}
 		
 		openConnection()
 	}
@@ -331,6 +336,7 @@ open class UZGPUBroadcastViewController: UIViewController {
 	@objc private func onOrientationChanged(_ notification: Notification) {
 		guard let orientation = DeviceUtil.videoOrientation(by: UIApplication.shared.statusBarOrientation) else { return }
 		rtmpStream.orientation = orientation
+		camera?.outputImageOrientation = UIApplication.shared.statusBarOrientation
 		
 		if orientation == .landscapeLeft || orientation == .landscapeRight {
 			rtmpStream.videoSettings = [

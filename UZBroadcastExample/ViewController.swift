@@ -179,7 +179,7 @@ class ViewController: UIViewController {
 									   autoRotate: autoRotate,
 									   saveToLocal: saveToLocal)
 		
-		let broadcastViewController = MyBroadcastViewController()
+		let broadcastViewController = MyGPUBroadcastViewController()
 		broadcastViewController.prepareForBroadcast(config: config)
 		broadcastViewController.modalPresentationStyle = .fullScreen
 		
