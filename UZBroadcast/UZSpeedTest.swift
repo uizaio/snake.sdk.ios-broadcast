@@ -14,14 +14,14 @@ public enum Result<T, E: Error> {
 }
 
 public class UZSpeedTest: NSObject {
-	static var shared = UZSpeedTest()
+	public static var shared = UZSpeedTest()
 	
 	private var responseDate: Date?
 	private var latestDate: Date?
 	private var current: ((Speed, Speed) -> ())!
 	private var final: ((Result<Speed, Error>) -> ())!
 	
-	func testUploadSpeed(_ url: URL, fileSize: Int, timeout: TimeInterval, current: @escaping (Speed, Speed) -> (), final: @escaping (Result<Speed, Error>) -> ()) {
+	public func testUploadSpeed(_ url: URL, fileSize: Int, timeout: TimeInterval, current: @escaping (Speed, Speed) -> (), final: @escaping (Result<Speed, Error>) -> ()) {
 		self.current = current
 		self.final = final
 		var request = URLRequest(url: url)
