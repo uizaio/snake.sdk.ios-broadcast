@@ -18,6 +18,7 @@ public class UZSpeedTest: NSObject {
 	
 	private var responseDate: Date?
 	private var latestDate: Date?
+	private var average: Speed?
 	private var current: ((Speed, Speed) -> ())!
 	private var final: ((Result<Speed, Error>) -> ())!
 	
@@ -63,12 +64,12 @@ extension UZSpeedTest: URLSessionTaskDelegate {
 		let timeSpend = currentTime.timeIntervalSince(latesDate)
 		
 		let current = calculate(bytes: bytesSent, seconds: timeSpend)
-		let average = calculate(bytes: totalBytesSent, seconds: -startDate.timeIntervalSinceNow)
+		average = calculate(bytes: totalBytesSent, seconds: -startDate.timeIntervalSinceNow)
 		
 		latestDate = currentTime
 		
 		DispatchQueue.main.async {
-			self.current(current, average)
+			self.current(current, self.average!)
 		}
 	}
 	
@@ -79,8 +80,15 @@ extension UZSpeedTest: URLSessionTaskDelegate {
 	}
 	
 	public func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
-		DispatchQueue.main.async {
-			self.final(.error(error!))
+		if let error = error, (error as NSError).code == -1001, let average = average {
+			DispatchQueue.main.async {
+				self.final(.value(average))
+			}
+		}
+		else {
+			DispatchQueue.main.async {
+				self.final(.error(error!))
+			}
 		}
 	}
 }

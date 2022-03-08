@@ -36,6 +36,8 @@ enum TableSectionType: String {
 class ViewController: UIViewController {
 	let tableView = UITableView(frame: .zero, style: .grouped)
 	let startButton = UIButton(type: .system)
+	let speedTestButton = UIButton(type: .system)
+	let speedLabel = UILabel()
 	let squareView = UIView()
 	
 	var sections: [TableSection] = [] {
@@ -66,6 +68,13 @@ class ViewController: UIViewController {
 			print(error)
 		}
 		
+		speedLabel.font = .systemFont(ofSize: 14, weight: .medium)
+		speedLabel.textColor = .lightGray
+		speedLabel.textAlignment = .center
+		
+		speedTestButton.setTitle("Speed Test", for: .normal)
+		speedTestButton.addTarget(self, action: #selector(onSpeedTest), for: .touchUpInside)
+		
 		startButton.setTitle("Start Broadcast", for: .normal)
 		startButton.setTitle("Stop Broadcast", for: .selected)
 		startButton.addTarget(self, action: #selector(onStart), for: .touchUpInside)
@@ -78,6 +87,8 @@ class ViewController: UIViewController {
 		
 		view.addSubview(tableView)
 		view.addSubview(startButton)
+		view.addSubview(speedTestButton)
+		view.addSubview(speedLabel)
 		view.addSubview(squareView)
 		
 		updateValues()
@@ -88,6 +99,8 @@ class ViewController: UIViewController {
 		let viewSize = view.bounds.size
 		let buttonSize = CGSize(width: 120, height: 50)
 		startButton.frame = CGRect(x: 10, y: viewSize.height - buttonSize.height - 20, width: viewSize.width - 20, height: buttonSize.height)
+		speedTestButton.frame = CGRect(x: 10, y: startButton.frame.minY - buttonSize.height - 10, width: viewSize.width - 20, height: buttonSize.height)
+		speedLabel.frame = CGRect(x: 10, y: speedTestButton.frame.minY - buttonSize.height - 10, width: viewSize.width - 20, height: 40)
 		tableView.frame = view.bounds.inset(by: UIEdgeInsets(top: 0, left: 0, bottom: buttonSize.height + 20, right: 0))
 		
 		let squareSize = CGSize(width: 100, height: 100)
@@ -107,6 +120,34 @@ class ViewController: UIViewController {
 	
 	func stopRotating() {
 		squareView.layer.removeAllAnimations()
+	}
+	
+	@objc func onSpeedTest() {
+		speedTestButton.isEnabled = false
+		
+		let url = URL(string: "https://beta.speedtest.net/api/js/servers?engine=js")
+		UZSpeedTest.shared.testUploadSpeed(url!, fileSize: 50_000_000, timeout: 10) { [weak self] current, average in
+			guard let self = self else { return }
+			self.speedLabel.text = "Current: \(current.pretty) - Average: \(average.pretty)"
+			self.view.setNeedsLayout()
+		} final: { [weak self] result in
+			guard let self = self else { return }
+			self.speedTestButton.isEnabled = true
+			
+			switch result {
+				case .value(let speed):
+					let resultString = "Upload Speed: \(speed.pretty)"
+					print(resultString)
+					self.speedLabel.text = resultString
+					self.showAlert(message: resultString)
+					break
+				case .error(let error):
+					print("Speed test error: \(error)")
+					self.showAlert(message: "Error: \(error.localizedDescription)")
+					break
+			}
+		}
+
 	}
 	
 	@objc func onStart() {
@@ -273,6 +314,11 @@ class ViewController: UIViewController {
 		present(alertController, animated: true, completion: nil)
 	}
 	
+	func showAlert(message: String) {
+		let alertControl = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+		alertControl.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+		UIViewController.topPresented()?.present(alertControl, animated: true, completion: nil)
+	}
 }
 
 @available(iOS 13.0, *)
