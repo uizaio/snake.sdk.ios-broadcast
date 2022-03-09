@@ -147,7 +147,6 @@ class ViewController: UIViewController {
 					break
 			}
 		}
-
 	}
 	
 	@objc func onStart() {
