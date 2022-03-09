@@ -71,6 +71,25 @@ Remember to add these usage description keys into `Info.plist` file:
 <string>App needs access to microphone for broadcasting</string>
 ```
 
+## Network SpeedTest
+To determine your upload speed before setting the right configuration for broadcasting, use this:
+```swift
+let url = URL(string: "https://beta.speedtest.net/api/js/servers?engine=js") // set your own upload server here
+UZSpeedTest.shared.testUploadSpeed(url!, fileSize: 50_000_000, timeout: 10) { [weak self] current, average in
+  print("Current: \(current.pretty) - Average: \(average.pretty)")
+} final: { [weak self] result in
+  switch result {
+    case .value(let speed):
+      let resultString = "Upload Speed: \(speed.pretty)"
+      print(resultString)
+      break
+    case .error(let error):
+      print("Speed test error: \(error)")
+      break
+  }
+}
+```
+
 ## Reference
 [API Reference](https://uizaio.github.io/uiza-ios-broadcast-sdk/)
 
