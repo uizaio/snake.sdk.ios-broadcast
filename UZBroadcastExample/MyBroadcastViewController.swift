@@ -24,6 +24,7 @@ class MyBroadcastViewController: UZBroadcastViewController {
 	let frameLayout = ZStackLayout()
 	let liveLabel = LiveBadgeView()
 	let statusLabel = UILabel()
+	let speedLabel = UILabel()
 	
 	let beautyEffect = BeautyEffect()
 	let monochromeEffect = MonochromeEffect()
@@ -38,6 +39,9 @@ class MyBroadcastViewController: UZBroadcastViewController {
 		statusLabel.backgroundColor = .white
 		statusLabel.layer.cornerRadius = 5
 		statusLabel.layer.masksToBounds = true
+		
+		speedLabel.font = .systemFont(ofSize: 14, weight: .medium)
+		speedLabel.textColor = .white
 		
 		let iconSize = CGSize(width: 24, height: 24)
 		
@@ -99,6 +103,7 @@ class MyBroadcastViewController: UZBroadcastViewController {
 		view.addSubview(closeButton)
 		view.addSubview(statusLabel)
 		view.addSubview(liveLabel)
+		view.addSubview(speedLabel)
 		view.addSubview(frameLayout)
 		
 		frameLayout + VStackLayout {
@@ -132,6 +137,8 @@ class MyBroadcastViewController: UZBroadcastViewController {
 		let viewSize = view.bounds.size
 		let buttonSize = CGSize(width: 33, height: 33)
 		closeButton.frame = CGRect(x: viewSize.width - buttonSize.width - 15, y: view.extendSafeEdgeInsets.top + 16, width: buttonSize.width, height: buttonSize.height)
+		
+		speedLabel.frame = CGRect(x: 10, y: viewSize.height - view.extendSafeEdgeInsets.bottom - 30, width: viewSize.width - 20, height: 30)
 	}
 	
 	@discardableResult
@@ -251,6 +258,12 @@ class MyBroadcastViewController: UZBroadcastViewController {
 		isMuted = !isMuted
 		updateButtons()
 		showStatus(isMuted ? "Muted" : "Unmuted")
+	}
+	
+	// MARK: -
+	
+	override func rtmpStream(_ stream: RTMPStream, didStatics connection: RTMPConnection) {
+		speedLabel.text = "\(Speed(bytes: Int64(connection.currentBytesOutPerSecond), seconds: 1).pretty)"
 	}
 	
 	// MARK: -

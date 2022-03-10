@@ -400,6 +400,10 @@ open class UZBroadcastViewController: UIViewController, RTMPStreamDelegate {
 		print("bitRate increased: \(value)kps")
 	}
 	
+	open func rtmpStream(_ stream: RTMPStream, didStatics connection: RTMPConnection) {
+//		print("\(connection.currentBytesOutPerSecond)")
+	}
+	
 	open func rtmpStreamDidClear(_ stream: RTMPStream) {
 		
 	}
