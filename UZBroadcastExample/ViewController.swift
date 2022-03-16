@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import HaishinKit
 //import UZBroadcast
 
 struct TableItem {
@@ -88,8 +89,8 @@ class ViewController: UIViewController {
 		view.addSubview(tableView)
 		view.addSubview(startButton)
 		view.addSubview(speedTestButton)
-		view.addSubview(speedLabel)
 		view.addSubview(squareView)
+		view.addSubview(speedLabel)
 		
 		updateValues()
 	}
@@ -100,11 +101,11 @@ class ViewController: UIViewController {
 		let buttonSize = CGSize(width: 120, height: 50)
 		startButton.frame = CGRect(x: 10, y: viewSize.height - buttonSize.height - 20, width: viewSize.width - 20, height: buttonSize.height)
 		speedTestButton.frame = CGRect(x: 10, y: startButton.frame.minY - buttonSize.height - 10, width: viewSize.width - 20, height: buttonSize.height)
-		speedLabel.frame = CGRect(x: 10, y: speedTestButton.frame.minY - buttonSize.height - 10, width: viewSize.width - 20, height: 40)
 		tableView.frame = view.bounds.inset(by: UIEdgeInsets(top: 0, left: 0, bottom: buttonSize.height + 20, right: 0))
 		
 		let squareSize = CGSize(width: 100, height: 100)
 		squareView.frame = CGRect(x: (viewSize.width - squareSize.width)/2, y: viewSize.height - squareSize.height - buttonSize.height - 50, width: squareSize.width, height: squareSize.height)
+		speedLabel.frame = CGRect(x: 10, y: squareView.frame.minY - buttonSize.height - 10, width: viewSize.width - 20, height: 40)
 	}
 	
 	func startRotating() {
@@ -252,6 +253,7 @@ class ViewController: UIViewController {
 									   saveToLocal: saveToLocal)
 		
 		broadcaster = UZScreenBroadcast()
+		broadcaster?.delegate = self
 		broadcaster!.prepareForBroadcast(config: config)
 		broadcaster!.isCameraEnabled = false
 		broadcaster!.isMicrophoneEnabled = false
@@ -261,6 +263,7 @@ class ViewController: UIViewController {
 	}
 	
 	func stopScreenBroadcasting() {
+		speedLabel.text = ""
 		startButton.isSelected = false
 		stopRotating()
 		broadcaster?.stopBroadcast(handler: nil)
@@ -344,6 +347,30 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		tableView.deselectRow(at: indexPath, animated: true)
 		showOptions(item: sections[indexPath.section].items[indexPath.row])
+	}
+	
+}
+
+@available(iOS 13.0, *)
+extension ViewController: RTMPStreamDelegate {
+	
+	func rtmpStream(_ stream: RTMPStream, didPublishInsufficientBW connection: RTMPConnection) {
+	}
+	
+	func rtmpStream(_ stream: RTMPStream, didPublishSufficientBW connection: RTMPConnection) {
+	}
+	
+	func rtmpStream(_ stream: RTMPStream, didStatics connection: RTMPConnection) {
+		speedLabel.text = "Current Speed: \(Speed(bytes: Int64(connection.currentBytesOutPerSecond), seconds: 1).pretty)"
+	}
+	
+	func rtmpStream(_ stream: RTMPStream, didOutput video: CMSampleBuffer) {
+	}
+	
+	func rtmpStream(_ stream: RTMPStream, didOutput audio: AVAudioBuffer, presentationTimeStamp: CMTime) {
+	}
+	
+	func rtmpStreamDidClear(_ stream: RTMPStream) {
 	}
 	
 }

@@ -15,13 +15,15 @@ import VideoToolbox
 This class helps you to initialize a screen broadcast session
 */
 @available(iOS 13.0, *)
-public class UZScreenBroadcast {
+public class UZScreenBroadcast: RTMPStreamDelegate {
 	/// Current broadcastURL
 	public private(set) var broadcastURL: URL?
 	/// Current streamKey
 	public private(set) var streamKey: String?
 	/// `true` if broadcasting
 	public fileprivate(set)var isBroadcasting = false
+	/// RTMPStreamDelegate
+	public var delegate: RTMPStreamDelegate?
 	
 	@available(iOS 13.0, *)
 	/// Turn on or off microphone
@@ -57,7 +59,8 @@ public class UZScreenBroadcast {
 	public var isRecording: Bool {
 		return screenRecorder.isRecording
 	}
-	
+	/// Minimum Video Bitrate (is used when `adaptiveBitrate` is `true`)
+	public var minVideoBitrate: UInt32?
 	/// Video Bitrate
 	public var videoBitrate: UInt32? {
 		get { rtmpStream.videoSettings[.bitrate] as? UInt32 }
@@ -137,6 +140,8 @@ public class UZScreenBroadcast {
 		screenRecorder.startCapture(handler: { (sampleBuffer, bufferType, error) in
 			self.processSampleBuffer(sampleBuffer, with: bufferType)
 		}, completionHandler: completionHandler)
+		
+		rtmpStream.delegate = self
 		
 //		#if os(macOS)
 //		rtmpStream.attachScreen(AVCaptureScreenInput(displayID: CGMainDisplayID()))
@@ -220,6 +225,47 @@ public class UZScreenBroadcast {
 	
 	@objc private func rtmpErrorHandler(_ notification: Notification) {
 		print("Error: \(notification)")
+	}
+	
+	// MARK: - RTMPStreamDelegate
+	
+	open func rtmpStream(_ stream: RTMPStream, didPublishInsufficientBW connection: RTMPConnection) {
+		delegate?.rtmpStream(stream, didPublishInsufficientBW: connection)
+		
+		guard config.adaptiveBitrate, let currentBitrate = rtmpStream.videoSettings[.bitrate] as? UInt32 else { return }
+		let value = max(minVideoBitrate ?? currentBitrate, currentBitrate / 2)
+		guard value != currentBitrate else { return }
+		
+		stream.videoSettings[.bitrate] = value
+		print("bitRate decreased: \(value)kps")
+	}
+	
+	open func rtmpStream(_ stream: RTMPStream, didPublishSufficientBW connection: RTMPConnection) {
+		delegate?.rtmpStream(stream, didPublishSufficientBW: connection)
+		
+		guard config.adaptiveBitrate, let currentBitrate = rtmpStream.videoSettings[.bitrate] as? UInt32 else { return }
+		let value = min(videoBitrate ?? currentBitrate, currentBitrate * 2)
+		guard value != currentBitrate else { return }
+		
+		stream.videoSettings[.bitrate] = value
+		print("bitRate increased: \(value)kps")
+	}
+	
+	open func rtmpStream(_ stream: RTMPStream, didStatics connection: RTMPConnection) {
+//		print("\(connection.currentBytesOutPerSecond)")
+		delegate?.rtmpStream(stream, didStatics: connection)
+	}
+	
+	open func rtmpStream(_ stream: RTMPStream, didOutput video: CMSampleBuffer) {
+		delegate?.rtmpStream(stream, didOutput: video)
+	}
+	
+	open func rtmpStream(_ stream: RTMPStream, didOutput audio: AVAudioBuffer, presentationTimeStamp: CMTime) {
+		delegate?.rtmpStream(stream, didOutput: audio, presentationTimeStamp: presentationTimeStamp)
+	}
+	
+	open func rtmpStreamDidClear(_ stream: RTMPStream) {
+		delegate?.rtmpStreamDidClear(stream)
 	}
 	
 }

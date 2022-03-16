@@ -20,6 +20,8 @@ open class UZBroadcastViewController: UIViewController, RTMPStreamDelegate {
 	public private(set) var broadcastURL: URL?
 	/// Current streamKey
 	public private(set) var streamKey: String?
+	/// RTMPStreamDelegate
+	public var delegate: RTMPStreamDelegate?
 	
 	/// Set active camera
 	public var cameraPosition: UZCameraPosition = .front {
@@ -298,10 +300,7 @@ open class UZBroadcastViewController: UIViewController, RTMPStreamDelegate {
 	// MARK: - StatusBar & Rotation Handler
 	
 	open override var preferredStatusBarStyle: UIStatusBarStyle { .lightContent }
-	
-	open override var shouldAutorotate: Bool {
-		return config.autoRotate
-	}
+	open override var shouldAutorotate: Bool { config.autoRotate }
 	
 	open override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
 		return config.autoRotate == true ? .all : (UIDevice.current.userInterfaceIdiom == .phone ? .portrait : .all)
@@ -383,6 +382,8 @@ open class UZBroadcastViewController: UIViewController, RTMPStreamDelegate {
 	// MARK: - RTMPStreamDelegate
 	
 	open func rtmpStream(_ stream: RTMPStream, didPublishInsufficientBW connection: RTMPConnection) {
+		delegate?.rtmpStream(stream, didPublishInsufficientBW: connection)
+		
 		guard config.adaptiveBitrate, let currentBitrate = rtmpStream.videoSettings[.bitrate] as? UInt32 else { return }
 		let value = max(minVideoBitrate ?? currentBitrate, currentBitrate / 2)
 		guard value != currentBitrate else { return }
@@ -392,6 +393,8 @@ open class UZBroadcastViewController: UIViewController, RTMPStreamDelegate {
 	}
 	
 	open func rtmpStream(_ stream: RTMPStream, didPublishSufficientBW connection: RTMPConnection) {
+		delegate?.rtmpStream(stream, didPublishSufficientBW: connection)
+		
 		guard config.adaptiveBitrate, let currentBitrate = rtmpStream.videoSettings[.bitrate] as? UInt32 else { return }
 		let value = min(videoBitrate ?? currentBitrate, currentBitrate * 2)
 		guard value != currentBitrate else { return }
@@ -402,10 +405,19 @@ open class UZBroadcastViewController: UIViewController, RTMPStreamDelegate {
 	
 	open func rtmpStream(_ stream: RTMPStream, didStatics connection: RTMPConnection) {
 //		print("\(connection.currentBytesOutPerSecond)")
+		delegate?.rtmpStream(stream, didStatics: connection)
+	}
+	
+	open func rtmpStream(_ stream: RTMPStream, didOutput video: CMSampleBuffer) {
+		delegate?.rtmpStream(stream, didOutput: video)
+	}
+	
+	open func rtmpStream(_ stream: RTMPStream, didOutput audio: AVAudioBuffer, presentationTimeStamp: CMTime) {
+		delegate?.rtmpStream(stream, didOutput: audio, presentationTimeStamp: presentationTimeStamp)
 	}
 	
 	open func rtmpStreamDidClear(_ stream: RTMPStream) {
-		
+		delegate?.rtmpStreamDidClear(stream)
 	}
 	
 	// MARK: -
