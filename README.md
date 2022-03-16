@@ -90,6 +90,38 @@ UZSpeedTest.shared.testUploadSpeed(url!, fileSize: 50_000_000, timeout: 10) { [w
 }
 ```
 
+Or to get current broadcasting speed, do as following:
+```swift
+let screenBroadcaster = UZScreenBroadcast()
+screenBroadcaster.delegate = self // self = YourViewController
+
+let broadcastVC = UZBroadcastViewController()
+broadcastVC.delegate = self // self = YourViewController
+
+extension YourViewController: RTMPStreamDelegate {
+	
+  func rtmpStream(_ stream: RTMPStream, didStatics connection: RTMPConnection) {
+    // print("Current Speed: \(Speed(bytes: Int64(connection.currentBytesOutPerSecond), seconds: 1).pretty)")
+  }
+  
+  func rtmpStream(_ stream: RTMPStream, didPublishInsufficientBW connection: RTMPConnection) {
+  }
+	
+  func rtmpStream(_ stream: RTMPStream, didPublishSufficientBW connection: RTMPConnection) {
+  }
+	
+  func rtmpStream(_ stream: RTMPStream, didOutput video: CMSampleBuffer) {
+  }
+	
+  func rtmpStream(_ stream: RTMPStream, didOutput audio: AVAudioBuffer, presentationTimeStamp: CMTime) {
+  }
+	
+  func rtmpStreamDidClear(_ stream: RTMPStream) {
+  }
+	
+}
+```
+
 ## Reference
 [API Reference](https://uizaio.github.io/uiza-ios-broadcast-sdk/)
 
