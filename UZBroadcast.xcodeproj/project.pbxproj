@@ -255,7 +255,6 @@
 				63D772822764EAA5006FB42F /* UZGPUBroadcastViewController.swift */,
 				63D02B5B27D73FB10002532C /* UZSpeedTest.swift */,
 				63FD92CE241D1385001B7A48 /* UZBroadcast.h */,
-				63D772742763A735006FB42F /* UZBroadcastExample-Bridging-Header.h */,
 			);
 			path = UZBroadcast;
 			sourceTree = "<group>";
@@ -271,6 +270,7 @@
 				63FD931B2420CE0F001B7A48 /* ViewController.swift */,
 				63FD93202420CE11001B7A48 /* Assets.xcassets */,
 				63FD93222420CE11001B7A48 /* LaunchScreen.storyboard */,
+				63D772742763A735006FB42F /* UZBroadcastExample-Bridging-Header.h */,
 				63FD93252420CE11001B7A48 /* Info.plist */,
 			);
 			path = UZBroadcastExample;
@@ -882,6 +882,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "UZBroadcast/UZBroadcast-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -912,6 +913,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "UZBroadcast/UZBroadcast-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -936,7 +938,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.uiza.UZBroadcast;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = NO;
-				SWIFT_OBJC_BRIDGING_HEADER = "UZBroadcast/UZBroadcastExample-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "UZBroadcastExample/UZBroadcastExample-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -962,7 +964,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.uiza.UZBroadcast;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = NO;
-				SWIFT_OBJC_BRIDGING_HEADER = "UZBroadcast/UZBroadcastExample-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "UZBroadcastExample/UZBroadcastExample-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
