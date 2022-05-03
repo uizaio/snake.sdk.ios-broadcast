@@ -13,5 +13,6 @@ Pod::Spec.new do |s|
     s.swift_version = '5.3'
     
     s.ios.dependency "HaishinKit", "~> 1.1.6"
+    s.ios.dependency "GPUImage"
     s.static_framework = true
 end
