@@ -291,10 +291,7 @@ open class UZGPUBroadcastViewController: UIViewController {
 	// MARK: - StatusBar & Rotation Handler
 	
 	open override var preferredStatusBarStyle: UIStatusBarStyle { .lightContent }
-	
-	open override var shouldAutorotate: Bool {
-		return config.autoRotate
-	}
+	open override var shouldAutorotate: Bool { config.autoRotate }
 	
 	open override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
 		return config.autoRotate == true ? .all : (UIDevice.current.userInterfaceIdiom == .phone ? .portrait : .all)
@@ -307,7 +304,8 @@ open class UZGPUBroadcastViewController: UIViewController {
 	// MARK: - Events
 	
 	var retryCount = 0
-	var maxRetryCount = 5
+	public var maxRetryCount = 5
+	public var retryGapInterval: TimeInterval = 2
 	
 	@objc private func rtmpStatusHandler(_ notification: Notification) {
 		let e = Event.from(notification)
@@ -320,10 +318,7 @@ open class UZGPUBroadcastViewController: UIViewController {
 				rtmpStream.publish(streamKey!, type: config.saveToLocal == true ? .localRecord : .live)
 				
 			case RTMPConnection.Code.connectFailed.rawValue, RTMPConnection.Code.connectClosed.rawValue:
-				guard retryCount <= maxRetryCount else { return }
-				Thread.sleep(forTimeInterval: pow(2.0, Double(retryCount)))
-				rtmpConnection.connect(broadcastURL!.absoluteString)
-				retryCount += 1
+				retryIfApplicable()
 				
 			default: break
 		}
@@ -331,6 +326,14 @@ open class UZGPUBroadcastViewController: UIViewController {
 	
 	@objc private func rtmpErrorHandler(_ notification: Notification) {
 		print("Error: \(notification)")
+		retryIfApplicable()
+	}
+	
+	private func retryIfApplicable() {
+		guard retryCount <= maxRetryCount else { return }
+		Thread.sleep(forTimeInterval: retryGapInterval)
+		rtmpConnection.connect(broadcastURL!.absoluteString)
+		retryCount += 1
 	}
 	
 	@objc private func onOrientationChanged(_ notification: Notification) {

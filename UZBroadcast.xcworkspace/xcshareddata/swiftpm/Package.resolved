@@ -1,34 +1,32 @@
 {
-  "object": {
-    "pins": [
-      {
-        "package": "FrameLayoutKit",
-        "repositoryURL": "https://github.com/kennic/FrameLayoutKit",
-        "state": {
-          "branch": "master",
-          "revision": "44ec1e68c2a707399c28b0031f2cdbb07b7db64d",
-          "version": null
-        }
-      },
-      {
-        "package": "NKButton",
-        "repositoryURL": "https://github.com/kennic/NKButton",
-        "state": {
-          "branch": "master",
-          "revision": "1c09e11c4e88a76816e12756380a79d9a7182949",
-          "version": null
-        }
-      },
-      {
-        "package": "NVActivityIndicatorView",
-        "repositoryURL": "https://github.com/ninjaprox/NVActivityIndicatorView.git",
-        "state": {
-          "branch": null,
-          "revision": "4a4726d15367d82bd3e9e1f01625bd76dbbb0c98",
-          "version": "4.8.0"
-        }
+  "pins" : [
+    {
+      "identity" : "framelayoutkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kennic/FrameLayoutKit",
+      "state" : {
+        "branch" : "master",
+        "revision" : "a6901c5757c1ea96c7a7efd564a3ff705e613fd7"
       }
-    ]
-  },
-  "version": 1
+    },
+    {
+      "identity" : "nkbutton",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kennic/NKButton",
+      "state" : {
+        "branch" : "master",
+        "revision" : "1c09e11c4e88a76816e12756380a79d9a7182949"
+      }
+    },
+    {
+      "identity" : "nvactivityindicatorview",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ninjaprox/NVActivityIndicatorView.git",
+      "state" : {
+        "revision" : "4a4726d15367d82bd3e9e1f01625bd76dbbb0c98",
+        "version" : "4.8.0"
+      }
+    }
+  ],
+  "version" : 2
 }

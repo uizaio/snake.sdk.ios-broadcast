@@ -313,7 +313,8 @@ open class UZBroadcastViewController: UIViewController, RTMPStreamDelegate {
 	// MARK: - Events
 	
 	var retryCount = 0
-	var maxRetryCount = 5
+	public var maxRetryCount = 5
+	public var retryGapInterval: TimeInterval = 2
 	
 	@objc private func rtmpStatusHandler(_ notification: Notification) {
 		let e = Event.from(notification)
@@ -326,10 +327,7 @@ open class UZBroadcastViewController: UIViewController, RTMPStreamDelegate {
 				rtmpStream.publish(streamKey!, type: config.saveToLocal == true ? .localRecord : .live)
 				
 			case RTMPConnection.Code.connectFailed.rawValue, RTMPConnection.Code.connectClosed.rawValue:
-				guard retryCount <= maxRetryCount else { return }
-				Thread.sleep(forTimeInterval: pow(2.0, Double(retryCount)))
-				rtmpConnection.connect(broadcastURL!.absoluteString)
-				retryCount += 1
+				retryIfApplicable()
 				
 			default: break
 		}
@@ -337,6 +335,14 @@ open class UZBroadcastViewController: UIViewController, RTMPStreamDelegate {
 	
 	@objc private func rtmpErrorHandler(_ notification: Notification) {
 		print("Error: \(notification)")
+		retryIfApplicable()
+	}
+	
+	private func retryIfApplicable() {
+		guard retryCount <= maxRetryCount else { return }
+		Thread.sleep(forTimeInterval: retryGapInterval)
+		rtmpConnection.connect(broadcastURL!.absoluteString)
+		retryCount += 1
 	}
 	
 	@objc private func onOrientationChanged(_ notification: Notification) {
