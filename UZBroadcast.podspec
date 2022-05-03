@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name = 'UZBroadcast'
-    s.version = '2.2'
+    s.version = '2.2.1'
     s.summary = 'UZBroadcast'
     s.homepage = 'https://uiza.io/'
     s.documentation_url = 'https://uizaio.github.io/uiza-ios-broadcast-sdk/'
