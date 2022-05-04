@@ -11,6 +11,7 @@
 		51F19478E1EA89EBCE3D7CE8 /* Pods_UZBroadcastExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34411835DEFC4A4B7EA93813 /* Pods_UZBroadcastExtension.framework */; };
 		63402F45242C665A007CE911 /* UZBroadcastConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63402F44242C665A007CE911 /* UZBroadcastConfig.swift */; };
 		635036C526F3587500AF3E2F /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635036C426F3587400AF3E2F /* Extensions.swift */; };
+		636E04262822604F0022C9C6 /* UZBroadcast-Bridging-Header.h in Headers */ = {isa = PBXBuildFile; fileRef = 636E04252822604F0022C9C6 /* UZBroadcast-Bridging-Header.h */; };
 		63744BAA26E66CEC00F81B82 /* FrameLayoutKit in Frameworks */ = {isa = PBXBuildFile; productRef = 63744BA926E66CEC00F81B82 /* FrameLayoutKit */; };
 		63744BAD26E66D0700F81B82 /* NKButton in Frameworks */ = {isa = PBXBuildFile; productRef = 63744BAC26E66D0700F81B82 /* NKButton */; };
 		63744BAF26E7C96C00F81B82 /* VideoEffects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63744BAE26E7C96C00F81B82 /* VideoEffects.swift */; };
@@ -96,6 +97,7 @@
 		5BE19D75B5A4E6A36325EEE0 /* Pods-UZBroadcast.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UZBroadcast.release.xcconfig"; path = "Target Support Files/Pods-UZBroadcast/Pods-UZBroadcast.release.xcconfig"; sourceTree = "<group>"; };
 		63402F44242C665A007CE911 /* UZBroadcastConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UZBroadcastConfig.swift; sourceTree = "<group>"; };
 		635036C426F3587400AF3E2F /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		636E04252822604F0022C9C6 /* UZBroadcast-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UZBroadcast-Bridging-Header.h"; sourceTree = "<group>"; };
 		63744BAE26E7C96C00F81B82 /* VideoEffects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoEffects.swift; sourceTree = "<group>"; };
 		63744BCB26EBA7C100F81B82 /* UZBroadcastExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = UZBroadcastExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		63744BCC26EBA7C100F81B82 /* ReplayKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReplayKit.framework; path = System/Library/Frameworks/ReplayKit.framework; sourceTree = SDKROOT; };
@@ -106,7 +108,6 @@
 		63744BDB26EBA7C200F81B82 /* BroadcastSetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BroadcastSetupViewController.swift; sourceTree = "<group>"; };
 		63744BDD26EBA7C200F81B82 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		63D02B5B27D73FB10002532C /* UZSpeedTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UZSpeedTest.swift; sourceTree = "<group>"; };
-		63D772742763A735006FB42F /* UZBroadcastExample-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UZBroadcastExample-Bridging-Header.h"; sourceTree = "<group>"; };
 		63D772752763A736006FB42F /* NetStream+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NetStream+Extension.swift"; sourceTree = "<group>"; };
 		63D772762763A736006FB42F /* GPUImageBeautyFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUImageBeautyFilter.h; sourceTree = "<group>"; };
 		63D772782763A736006FB42F /* GPUImageBeautyFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUImageBeautyFilter.m; sourceTree = "<group>"; };
@@ -255,6 +256,7 @@
 				63D772822764EAA5006FB42F /* UZGPUBroadcastViewController.swift */,
 				63D02B5B27D73FB10002532C /* UZSpeedTest.swift */,
 				63FD92CE241D1385001B7A48 /* UZBroadcast.h */,
+				636E04252822604F0022C9C6 /* UZBroadcast-Bridging-Header.h */,
 			);
 			path = UZBroadcast;
 			sourceTree = "<group>";
@@ -270,7 +272,6 @@
 				63FD931B2420CE0F001B7A48 /* ViewController.swift */,
 				63FD93202420CE11001B7A48 /* Assets.xcassets */,
 				63FD93222420CE11001B7A48 /* LaunchScreen.storyboard */,
-				63D772742763A735006FB42F /* UZBroadcastExample-Bridging-Header.h */,
 				63FD93252420CE11001B7A48 /* Info.plist */,
 			);
 			path = UZBroadcastExample;
@@ -284,6 +285,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				63FD92D0241D1385001B7A48 /* UZBroadcast.h in Headers */,
+				636E04262822604F0022C9C6 /* UZBroadcast-Bridging-Header.h in Headers */,
 				63D7727C2763A736006FB42F /* GPUImageBeautyFilter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

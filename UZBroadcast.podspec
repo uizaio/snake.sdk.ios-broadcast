@@ -8,6 +8,7 @@ Pod::Spec.new do |s|
     s.license = { :type => "BSD", :file => "LICENSE" }
     s.source = { :git => "https://github.com/uizaio/snake.sdk.ios-broadcast.git", :tag => "v" + s.version.to_s }
     s.source_files = 'UZBroadcast/*.*', 'UZBroadcast/*.{h,m}'
+    s.public_header_files = 'UZBroadcast/*.h'
     s.ios.deployment_target = '10.0'
     s.requires_arc  = true
     s.swift_version = '5.3'
