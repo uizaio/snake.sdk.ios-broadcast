@@ -30,6 +30,9 @@ enum TableSectionType: String {
 	case audioSampleRate = "SampleRate"
 	case adaptiveBitrate = "Adaptive Bitrate"
 	case autoRotate = "Auto rotation"
+	case autoRetry = "Enable Auto Reconnect"
+	case maxRetry = "Maximum Retries"
+	case retryDelay = "Retry Delay"
 	case saveToLocal = "Save to local"
 }
 
@@ -55,6 +58,9 @@ class ViewController: UIViewController {
 	var adaptiveBitrate = true
 	var saveToLocal = false
 	var autoRotate = true
+	var autoRetry = true
+	var maxRetry = 20
+	var retryInterval: TimeInterval = 10
 	
 	var broadcaster: UZScreenBroadcast?
 	
@@ -101,11 +107,11 @@ class ViewController: UIViewController {
 		let buttonSize = CGSize(width: 120, height: 50)
 		startButton.frame = CGRect(x: 10, y: viewSize.height - buttonSize.height - 20, width: viewSize.width - 20, height: buttonSize.height)
 		speedTestButton.frame = CGRect(x: 10, y: startButton.frame.minY - buttonSize.height - 10, width: viewSize.width - 20, height: buttonSize.height)
-		tableView.frame = view.bounds.inset(by: UIEdgeInsets(top: 0, left: 0, bottom: buttonSize.height + 20, right: 0))
+		speedLabel.frame = CGRect(x: 10, y: speedTestButton.frame.minY - 20, width: viewSize.width - 20, height: 40)
+		tableView.frame = view.bounds.inset(by: UIEdgeInsets(top: 0, left: 0, bottom: buttonSize.height + 100, right: 0))
 		
 		let squareSize = CGSize(width: 100, height: 100)
 		squareView.frame = CGRect(x: (viewSize.width - squareSize.width)/2, y: viewSize.height - squareSize.height - buttonSize.height - 50, width: squareSize.width, height: squareSize.height)
-		speedLabel.frame = CGRect(x: 10, y: squareView.frame.minY - buttonSize.height - 10, width: viewSize.width - 20, height: 40)
 	}
 	
 	func startRotating() {
@@ -151,11 +157,9 @@ class ViewController: UIViewController {
 	}
 	
 	@objc func onStart() {
-		if #available(iOS 13.0, *) {
-			if startButton.isSelected {
-				stopScreenBroadcasting()
-				return
-			}
+		if startButton.isSelected {
+			stopScreenBroadcasting()
+			return
 		}
 		
 		let alertController = UIAlertController(title: "Start broadcast", message: "Please enter your broadcast URL", preferredStyle: .alert)
@@ -181,14 +185,12 @@ class ViewController: UIViewController {
 			alertController.dismiss(animated: true, completion: nil)
 		}))
 		
-		if #available(iOS 13.0, *) {
-			alertController.addAction(UIAlertAction(title: "Screen Broadcast", style: .default, handler: { [weak self] (action) in
-				guard let textFields = alertController.textFields else { return }
-				guard let url = URL(string: textFields.first?.text ?? ""), let streamKey = textFields.last?.text else { return }
-				self?.startScreenBroadcasting(url: url, streamKey: streamKey)
-				alertController.dismiss(animated: true, completion: nil)
-			}))
-		}
+		alertController.addAction(UIAlertAction(title: "Screen Broadcast", style: .default, handler: { [weak self] (action) in
+			guard let textFields = alertController.textFields else { return }
+			guard let url = URL(string: textFields.first?.text ?? ""), let streamKey = textFields.last?.text else { return }
+			self?.startScreenBroadcasting(url: url, streamKey: streamKey)
+			alertController.dismiss(animated: true, completion: nil)
+		}))
 		
 		present(alertController, animated: true, completion: nil)
 	}
@@ -203,7 +205,11 @@ class ViewController: UIViewController {
 		
 					TableSection(title: "Option", items: [TableItem(title: TableSectionType.adaptiveBitrate.rawValue, value: adaptiveBitrate.toString(), options: [true, false].compactMap({ return $0.toString() })),
 														  TableItem(title: TableSectionType.autoRotate.rawValue, value: autoRotate.toString(), options: [true, false].compactMap({ return $0.toString() })),
-														  TableItem(title: TableSectionType.saveToLocal.rawValue, value: saveToLocal.toString(), options: [true, false].compactMap({ return $0.toString() }))])]
+														  TableItem(title: TableSectionType.saveToLocal.rawValue, value: saveToLocal.toString(), options: [true, false].compactMap({ return $0.toString() }))]),
+		
+					TableSection(title: "Auto Reconnect", items: [TableItem(title: TableSectionType.autoRetry.rawValue, value: autoRetry.toString(), options: [true, false].compactMap({ return $0.toString() })),
+																  TableItem(title: TableSectionType.maxRetry.rawValue, value: "\(maxRetry)", options: Array(1...100).map({ return "\($0)" })),
+																  TableItem(title: TableSectionType.retryDelay.rawValue, value: "\(retryInterval)s", options: Array(1...60).map({ return "\($0)s" }))])]
 	}
 	
 	func startBroadcasting(url: URL, streamKey: String) {
@@ -220,8 +226,10 @@ class ViewController: UIViewController {
 									   autoRotate: autoRotate,
 									   saveToLocal: saveToLocal)
 		
-		let broadcastViewController = MyGPUBroadcastViewController()
+		let broadcastViewController = MyBroadcastViewController()
 		broadcastViewController.prepareForBroadcast(config: config)
+		broadcastViewController.maxRetryCount = autoRetry ? maxRetry : 0
+		broadcastViewController.retryGapInterval = retryInterval
 		broadcastViewController.modalPresentationStyle = .fullScreen
 		
 		present(broadcastViewController, animated: false) {
@@ -296,6 +304,15 @@ class ViewController: UIViewController {
 		}
 		else if option.title == TableSectionType.saveToLocal.rawValue {
 			saveToLocal = index == 0
+		}
+		else if option.title == TableSectionType.autoRetry.rawValue {
+			autoRetry = index == 0
+		}
+		else if option.title == TableSectionType.retryDelay.rawValue {
+			retryInterval = Double(option.options[index].replacingOccurrences(of: "s", with: "")) ?? 1
+		}
+		else if option.title == TableSectionType.maxRetry.rawValue {
+			maxRetry = Int(option.options[index]) ?? 0
 		}
 		
 		updateValues()
